@@ -1,0 +1,129 @@
+<div class="register-container">
+  <h1>Registrar Usuario</h1>
+
+  <form (ngSubmit)="registrar()" #registerForm="ngForm">
+    <!-- Nombre -->
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        [(ngModel)]="datos.nombre"
+        required
+        placeholder="Ingrese su nombre"
+        class="form-control"
+      />
+      <div class="error" *ngIf="errors.nombre">{{ errors.nombre }}</div>
+    </div>
+
+    <!-- Correo -->
+    <div class="form-group">
+      <label for="correo">Correo electrónico:</label>
+      <input
+        type="email"
+        id="correo"
+        name="correo"
+        [(ngModel)]="datos.correo"
+        required
+        placeholder="Ingrese su correo"
+        class="form-control"
+      />
+      <div class="error" *ngIf="errors.correo">{{ errors.correo }}</div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="datos.password"
+        (input)="checkPasswordStrength(datos.password)"
+        required
+        placeholder="Ingrese su contraseña"
+        class="form-control"
+      />
+      <div class="password-strength-bar">
+        <div
+          class="strength"
+          [style.width.%]="passwordStrength"
+          [class.weak]="passwordStrength < 50"
+          [class.strong]="passwordStrength >= 50"
+        ></div>
+      </div>
+      <ul class="password-criteria">
+        <li [class.valid]="passwordCriteria.minLength">
+          <span *ngIf="passwordCriteria.minLength">&#10003;</span>
+          <span *ngIf="!passwordCriteria.minLength">&#10007;</span>
+          Mínimo 6 caracteres
+        </li>
+        <li [class.valid]="passwordCriteria.upperCase">
+          <span *ngIf="passwordCriteria.upperCase">&#10003;</span>
+          <span *ngIf="!passwordCriteria.upperCase">&#10007;</span>
+          Una letra mayúscula
+        </li>
+        <li [class.valid]="passwordCriteria.lowerCase">
+          <span *ngIf="passwordCriteria.lowerCase">&#10003;</span>
+          <span *ngIf="!passwordCriteria.lowerCase">&#10007;</span>
+          Una letra minúscula
+        </li>
+        <li [class.valid]="passwordCriteria.number">
+          <span *ngIf="passwordCriteria.number">&#10003;</span>
+          <span *ngIf="!passwordCriteria.number">&#10007;</span>
+          Un número
+        </li>
+        <li [class.valid]="passwordCriteria.specialChar">
+          <span *ngIf="passwordCriteria.specialChar">&#10003;</span>
+          <span *ngIf="!passwordCriteria.specialChar">&#10007;</span>
+          Un carácter especial (arroba $!%*?&)
+        </li>
+      </ul>
+      <div class="error" *ngIf="errors.password">{{ errors.password }}</div>
+    </div>
+
+    <!-- Confirmar Contraseña -->
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Contraseña:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        required
+        placeholder="Repita la contraseña"
+        class="form-control"
+      />
+      <div class="error" *ngIf="errors.confirmPassword">
+        {{ errors.confirmPassword }}
+      </div>
+    </div>
+
+    <!-- Rol -->
+    <div class="form-group">
+      <label for="rol">Rol:</label>
+      <select
+        id="rol"
+        name="rol"
+        [(ngModel)]="datos.rol"
+        required
+        class="form-control"
+      >
+        <option value="" disabled selected>Seleccione un rol</option>
+        <option value="Veterinario">Veterinario</option>
+        <option value="Asistente">Asistente</option>
+      </select>
+      <div class="error" *ngIf="errors.rol">{{ errors.rol }}</div>
+    </div>
+
+    <!-- Botón de registro -->
+    <button
+      type="submit"
+      [disabled]="registerForm.invalid"
+      class="btn btn-primary"
+    >
+      Registrar Usuario
+    </button>
+  </form>
+</div>

@@ -1,0 +1,102 @@
+.register-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+
+  .register-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: green;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+
+  .password-strength-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    margin-top: 5px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .password-strength-bar .strength {
+    height: 100%;
+    transition: width 0.3s;
+  }
+
+  .password-strength-bar .strength.weak {
+    background-color: #f44336;
+  }
+
+  .password-strength-bar .strength.strong {
+    background-color: #4caf50;
+  }
+
+
+  .password-criteria {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+
+  .password-criteria li {
+    margin-bottom: 5px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+
+  .password-criteria li span {
+    margin-right: 5px;
+  }
+
+  .password-criteria li.valid {
+    color: green;
+  }
+
+  .password-criteria li:not(.valid) {
+    color: red;
+  }
+
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+

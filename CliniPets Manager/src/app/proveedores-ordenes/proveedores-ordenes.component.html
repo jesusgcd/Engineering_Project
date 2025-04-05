@@ -1,0 +1,203 @@
+<div class="proveedorOrdenes-container">
+    <div class="titulo">
+        <h2>Ordenes a proveedores</h2>
+        <div>
+            <input type="text" id="buscar" placeholder="Buscar orden..." [(ngModel)]="filtro" class="input-buscar" />
+            <button class="btn-agregar" (click)="abrirFormulario()">
+                <i class="fa fa-database"></i> Agregar Nuevo
+            </button>
+        </div>
+    </div>
+
+    <table class="tabla-contenedor">
+        <thead>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+            <tr>
+                <th>Proveedor</th> <!-- Nombre del Empresa  -->
+                <th>Numero de orden</th> <!-- Nombre del servicio  -->
+                <th>Fecha de creación</th>
+                <th>Fecha de entrega</th>
+                <th>Estado de la orden</th>
+
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="proveedorOrdenes && proveedorOrdenes.length > 0">
+            <tr *ngFor="let p of proveedorOrdenes | filter: filtro">
+                <td>{{ p.proveedorEmpresaNombre }}</td>
+                <td>{{ p.numeroOrden }}</td>
+                <td>{{ p.fechaCreacion }}</td>
+                <td>{{ p.fechaEntrega }}</td>
+                <td>{{ p.estadoOrden }}</td>
+                <!-- Se omite notas -->
+                <td>
+                    <button (click)="eliminarProveedorOrden(p.id,p.nombreProveedor)" class="btn-eliminar">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <button (click)="editarOrdenProveedor(p)" class="btn-editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn-ver" (click)="verDetallesProveedor(p)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <p *ngIf="!proveedorOrdenes || proveedorOrdenes.length === 0">No hay ordenes a proveedores disponibles.</p>
+    </table>
+</div>
+
+<!-- Formulario Emergente -->
+<div class="formulario" *ngIf="mostrarFormulario">
+    <div class="formulario-contenido">
+        <h3>{{ modoEdicion ? 'Actualizar información' : 'Registrar orden a Proveedor' }}</h3>
+        <form (ngSubmit)="agregarProveedorOrden()">
+
+            <div class="campo">
+                <label for="proveedor">Proveedor:</label>
+                <input id="proveedor" type="text" [value]="proveedorOrden.proveedorEmpresaNombre"
+                    placeholder="Seleccione un proveedor..." name="proveedor" readonly required />
+                <button type="button" class="btn-modal" (click)="abrirModalProveedores()">
+                    Seleccionar Proveedor
+                </button>
+                <!-- <div *ngIf="!proveedorContacto.proveedorEmpresaNombre && formulario.submitted" class="error">
+                  Debe seleccionar un proveedor.
+                </div> -->
+            </div>
+
+            <div class="campo">
+                <label for="numeroOrden">Numero de orden:</label>
+                <input id="numeroOrden" type="text" [(ngModel)]="proveedorOrden.numeroOrden" name="numeroOrden"
+                    required />
+            </div>
+
+            <div class="campo">
+                <label for="listaProductos">Lista de productos</label>
+                <input id="listaProductos" type="text" [(ngModel)]="proveedorOrden.listaProductos" name="listaProductos"
+                    required />
+            </div>
+
+
+
+            <div class="campo">
+                <label for="fechaCreacion">Fecha de creación</label>
+                <input id="fechaCreacion" type="date" [(ngModel)]="proveedorOrden.fechaCreacion" name="fechaCreacion"
+                    required />
+            </div>
+
+            <div class="campo">
+                <label for="fechaEntrega">Fecha de entrega</label>
+                <input id="fechaEntrega" type="date" [(ngModel)]="proveedorOrden.fechaEntrega" name="fechaEntrega"
+                    required />
+            </div>
+
+
+            <div class="campo">
+                <label for="estado">Estado:</label>
+                <select id="estado" [(ngModel)]="proveedorOrden.estadoOrden" name="estadoOrden" required>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Completado">Completado</option>
+                    <option value="Cancelado">Cancelado</option>
+
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="montoAproximado">Monto aproximado:</label>
+                <input id="montoAproximado" type="text" [(ngModel)]="proveedorOrden.montoAproximado"
+                    name="montoAproximado" required />
+
+            </div>
+
+
+            <div class="campo">
+                <label for="notas">Notas:</label>
+                <textarea id="notas" [(ngModel)]="proveedorOrden.notas" name="notas" required></textarea>
+            </div>
+
+            <div class="botones">
+                <button type="submit">Guardar</button>
+                <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+            </div>
+        </form>
+
+        <p *ngIf="mensajeExito" class="mensaje-exito">Servicio de proveedor agregado con éxito!</p>
+    </div>
+</div>
+
+
+<!-- Mensaje de Éxito -->
+<div *ngIf="mensajeExitoExistencia" class="mensaje-exito">
+    {{ mensajeExitoExistencia }}
+</div>
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+    <div class="modal-contenido">
+        <h3>¿Estás seguro de que deseas eliminar esta orden?</h3>
+        <p>Esta acción es irreversible</p>
+
+        <div class="botones">
+            <button class="btn-aceptar-eliminacion" (click)="confirmarEliminacion(true)">Sí</button>
+            <button class="btn-rechazar-eliminacion" (click)="confirmarEliminacion(false)">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- PRUEBA DE CHETOS -->
+<div class="modal-personalizado" *ngIf="mostrarModalEmpresaProveedora">
+    <div class="modal-contenido-personalizado">
+        <h3 class="modal-titulo-personalizado">Seleccione un proveedor</h3>
+
+        <!-- Campo de búsqueda -->
+        <input type="text" id="buscar" placeholder="Buscar proveedor..." [(ngModel)]="filtro"
+            class="input-busqueda-personalizada" />
+
+        <!-- Tabla con scroll -->
+        <div class="tabla-scroll-personalizada">
+            <table class="tabla-proveedores-personalizada">
+                <thead>
+                    <tr>
+                        <th>Proveedor</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let proveedorRecorriendo of empresasProveedoras | filter: filtro">
+                        <td>{{ proveedorRecorriendo.nombreProveedor }}</td>
+                        <td>
+                            <button class="boton-seleccionar-personalizado"
+                                (click)="seleccionarProveedor(proveedorRecorriendo)">
+                                Seleccionar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="boton-cerrar-personalizado" (click)="cerrarModalProveedores()">Cerrar</button>
+    </div>
+</div>
+
+
+
+<!-- Ventana Modal de Detalles del Proveedor -->
+<div class="modal" *ngIf="verModalVisible">
+    <div class="modal-content">
+        <h3>Detalles de la orden al proveedor:</h3>
+        <div *ngIf="proveedorOrdenSeleccionado">
+            <p><strong>Proveedor:</strong> {{ proveedorOrdenSeleccionado.proveedorEmpresaNombre }}</p>
+            <p><strong>Numero de orden:</strong> {{ proveedorOrdenSeleccionado.numeroOrden }}</p>
+            <p><strong>Fecha de creación:</strong> {{ proveedorOrdenSeleccionado.fechaCreacion }}</p>
+            <p><strong>Fecha de entrega:</strong> {{ proveedorOrdenSeleccionado.fechaEntrega }}</p>
+            <p><strong>Estado de la orden:</strong> {{ proveedorOrdenSeleccionado.estadoOrden }}</p>
+            <p><strong>Lista de productos</strong> {{ proveedorOrdenSeleccionado.listaProductos }}</p>
+            <p><strong>Monto aproximado:</strong> {{ proveedorOrdenSeleccionado.montoAproximado }}</p>
+            <p><strong>Notas:</strong> {{ proveedorOrdenSeleccionado.notas }}</p>
+        </div>
+        <div class="modal-actions">
+            <button class="confirm" (click)="cerrarModalVer()">Cerrar</button>
+        </div>
+    </div>
+</div>

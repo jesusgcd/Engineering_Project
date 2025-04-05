@@ -1,0 +1,175 @@
+/* Contenedor de la barra de navegación */
+.navbar-container {
+    background-color: #047c14;
+    width: 100%;  /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
+    margin: 0;
+    padding: 0;
+  }
+
+
+  .navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+  }
+
+  .navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar li {
+    position: relative;
+    padding: 14px 20px;
+  }
+
+  .navbar a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+
+  .navbar a:hover {
+    color: #ffcc00;
+  }
+
+  /* Dropdown */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+  }
+
+  .dropdown-content a {
+    color: #333;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #6200ea;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+/* Alinear el botón de Cerrar Sesión a la derecha */
+.navbar li:last-child {
+  margin-left: auto;
+}
+
+/* Estilo del botón de Cerrar Sesión */
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+
+.btn-salir {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px; /* Ajusta el tamaño del ícono */
+  cursor: pointer;
+}
+
+.btn-salir:hover {
+  color: #ffcc00; /* Color al pasar el ratón por encima */
+}
+
+.btn-salir i {
+  font-size: 20px; /* Ajusta el tamaño del ícono */
+}
+
+
+
+
+/* Estilo para el ícono de usuario */
+.usuario-info {
+  margin-left: auto; /* Empuja a la derecha */
+}
+
+.user-icon {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-icon i {
+  margin-right: 5px; /* Espacio entre el ícono y el texto */
+  font-size: 20px;
+}
+
+.user-icon:hover {
+  color: #ffcc00;
+}
+
+/* Estilo del menú desplegable del usuario */
+.user-dropdown {
+  display: none;
+  position: absolute;
+  background-color: white;
+  right: 0; /* Alinea el menú al borde derecho */
+  top: 100%;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.user-dropdown p {
+  margin: 0;
+  padding: 5px 0;
+  color: #333;
+}
+
+.user-dropdown hr {
+  margin: 10px 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+.user-dropdown button {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+}
+
+.user-dropdown button:hover {
+  background-color: #c82333;
+}
+
+/* Mostrar el menú desplegable */
+.usuario-info:hover .user-dropdown {
+  display: block;
+}

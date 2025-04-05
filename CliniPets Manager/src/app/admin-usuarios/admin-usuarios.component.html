@@ -1,0 +1,204 @@
+
+<div class="usuarios-container">
+  <div class="titulo">
+    <h2>Gestión de usuarios</h2>
+    <div>
+      <input
+        type="text"
+        placeholder="Buscar usuarios..."
+        [(ngModel)]="searchTerm"
+        (input)="buscarUsuarios()"
+        class="input-buscar"
+      />
+      <button class="btn-agregar" (click)="openRegisterModal()">
+        <i class="fa fa-database"></i> Agregar Usuario
+      </button>
+    </div>
+  </div>
+
+  <table class="tabla-contenedor">
+    <thead>
+      <tr>
+        <th>Correo electrónico</th>
+        <th>Nombre</th>
+        <th>Rol</th>
+        <th>Contraseña</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuariosPaginados">
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.rol }}</td>
+
+        <td>
+          <div class="password-cell">
+            <span>{{ mostrarPassword[usuario.uid] ? usuario.password : ocultarPasswordM(usuario.password) }}</span>
+            <!-- Verifica si el correo no es el del admin para mostrar el botón -->
+            <button *ngIf="usuario.correo !== 'clinicvet01@gmail.com'"
+                    type="button"
+                    class="toggle-visibility-m"
+                    (click)="togglePasswordVisibilityM(usuario.uid)">
+              <i [class]="mostrarPassword[usuario.uid] ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+        </td>
+
+
+        <td>
+       <!-- Botón de editar (solo si no es el administrador) -->
+       <button
+       class="btn-editar"
+       *ngIf="usuario.correo !== 'clinicvet01@gmail.com'"
+       (click)="openEditModal(usuario)"
+       title="Editar"
+     >
+       <i class="bi bi-pencil-square"></i>
+     </button>
+
+     <!-- Botón de eliminar (solo si no es el administrador) -->
+     <button
+       class="btn-eliminar"
+       *ngIf="usuario.correo !== 'clinicvet01@gmail.com'"
+       (click)="eliminarUsuario(usuario.uid, usuario.nombre)"
+       title="Eliminar"
+     >
+       <i class="bi bi-trash"></i>
+     </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="paginacion">
+    <!-- Botón "Anterior" -->
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+      Anterior
+    </button>
+
+    <!-- Botones numerados -->
+    <button
+      *ngFor="let page of getPages()"
+      [class.active]="currentPage === page"
+      (click)="goToPage(page)"
+    >
+      {{ page }}
+    </button>
+
+    <!-- Botón "Siguiente" -->
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      Siguiente
+    </button>
+  </div>
+
+
+</div>
+
+<div class="mensaje-dinamico" *ngIf="mensajeDinamico">
+  {{ mensajeDinamico }}
+</div>
+
+
+<div class="modal" *ngIf="isEditModalVisible">
+  <div class="modal-content-m">
+    <h2>Editar Usuario</h2>
+    <form>
+      <label for="correo">Correo:</label>
+      <input type="email" id="correo" [(ngModel)]="usuarioSeleccionado!.editCorreo" name="correo" readonly />
+
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" [(ngModel)]="usuarioSeleccionado!.editNombre" name="nombre" />
+
+      <label for="rol">Rol:</label>
+      <select id="rol" [(ngModel)]="usuarioSeleccionado!.editRol" name="rol">
+        <option value="Asistente">Asistente</option>
+        <option value="Veterinario">Veterinario</option>
+      </select>
+
+
+
+<div class="password-container">
+  <label for="contrasena">Contraseña:</label>
+  <div class="input-group">
+    <input
+      [type]="mostrarContrasena ? 'text' : 'password'"
+      id="contrasena"
+      [(ngModel)]="usuarioSeleccionado!.editContrasena"
+      name="contrasena"
+      (input)="validatePasswordEdit(usuarioSeleccionado!.editContrasena!)"
+    />
+    <button
+      title="Ver"
+      type="button"
+      class="toggle-visibility"
+      (click)="togglePasswordVisibility()"
+    >
+      <i [class]="mostrarContrasena ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+    </button>
+  </div>
+
+  <!-- Mostrar error de contraseña si no es válida -->
+  <div class="error" *ngIf="editPasswordError">{{ editPasswordError }}</div>
+
+  <!-- Indicador de validación -->
+  <ul class="password-criteria">
+    <li [class.valid]="passwordEditCriteria.minLength">
+      <span *ngIf="passwordEditCriteria.minLength">&#10003;</span>
+      <span *ngIf="!passwordEditCriteria.minLength">&#10007;</span>
+      Mínimo 6 caracteres
+    </li>
+    <li [class.valid]="passwordEditCriteria.upperCase">
+      <span *ngIf="passwordEditCriteria.upperCase">&#10003;</span>
+      <span *ngIf="!passwordEditCriteria.upperCase">&#10007;</span>
+      Una letra mayúscula
+    </li>
+    <li [class.valid]="passwordEditCriteria.lowerCase">
+      <span *ngIf="passwordEditCriteria.lowerCase">&#10003;</span>
+      <span *ngIf="!passwordEditCriteria.lowerCase">&#10007;</span>
+      Una letra minúscula
+    </li>
+    <li [class.valid]="passwordEditCriteria.specialChar">
+      <span *ngIf="passwordEditCriteria.specialChar">&#10003;</span>
+      <span *ngIf="!passwordEditCriteria.specialChar">&#10007;</span>
+      Un carácter especial (arroba $!%*?&)
+    </li>
+  </ul>
+</div>
+
+    </form>
+    <div class="modal-actions-m">
+      <button class="confirm" (click)="guardarCambios()">Guardar</button>
+      <button class="cancel" (click)="closeEditModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal" *ngIf="modalVisible">
+  <div class="modal-content">
+    <h2>{{ modalTitle }}</h2>
+    <p>{{ modalMessage }}</p>
+    <div class="modal-actions">
+      <button class="confirm" (click)="confirmModal()">Confirmar</button>
+      <button class="cancel" (click)="cancelModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="finalModalVisible">
+  <div class="modal-content">
+    <h2>Información</h2>
+    <p>{{ finalModalMessage }}</p>
+    <div class="modal-actions">
+      <button class="confirm" (click)="closeFinalModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal para Registrar Usuario -->
+  <app-modal [isVisible]="isRegisterModalVisible" (onClose)="closeRegisterModal()">
+    <app-register-user (onRegisterSuccess)="handleRegisterSuccess()"></app-register-user>
+  </app-modal>
+
+

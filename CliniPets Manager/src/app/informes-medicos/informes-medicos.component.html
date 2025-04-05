@@ -1,0 +1,161 @@
+<div class="detalles-expediente">
+    <!-- Información General -->
+    <div class="card mb-5 shadow tarjeta-informacion tabla-contenedor">
+        <div class="card-header bg-primary text-white text-center">
+            <h3><i class="bi bi-info-circle"></i> Información General de la Mascota</h3>
+        </div>
+        <div class="card-body row">
+            <div class="col-md-6 mb-3">
+                <p><strong><i class="bi bi-paw"></i> Nombre:</strong> {{ mascota?.nombreMascota }}</p>
+                <p><strong><i class="bi bi-gender-ambiguous"></i> Sexo:</strong> {{ mascota?.sexo }}</p>
+                <p><strong><i class="bi bi-egg"></i> Especie:</strong> {{ mascota?.especie }}</p>
+                <p><strong><i class="bi bi-calendar-event"></i> Fecha Nacimiento:</strong> {{ mascota?.fechaNacimiento |
+                    date }}</p>
+                <p><strong><i class="bi bi-person"></i> Dueño:</strong> {{ mascota?.nombreDueno }}</p>
+                <p><strong><i class="bi bi-telephone"></i> Teléfono:</strong> {{ mascota?.contactoDueno?.telefono }}</p>
+                <p><strong><i class="bi bi-envelope"></i> Correo:</strong> {{ mascota?.contactoDueno?.correo }}</p>
+            </div>
+        </div>
+        <!-- Botón para Volver Atrás -->
+        <div class="volver-atras">
+            <button class="btn-volver" (click)="volverAtras()">
+                <i class="bi bi-arrow-left"></i> Volver Atrás
+            </button>
+        </div>
+
+    </div>
+    <div>
+
+        <!-- Tabla de Notas de Seguimiento -->
+        <div class="tabla-contenedor">
+            <div class="titulo div-agrega">
+                <h1 class="tituloExpediente">Gestión de Informes Médicos</h1>
+                <button class="btn-agregar" (click)="abrirFormulario()">
+                    <i class="fa"></i> Crear Informe Médico
+                </button>
+            </div>
+
+            <div class="barra-busqueda">
+                <label for="buscar">Buscar:</label>
+                <input type="text" id="buscar" placeholder="Buscar notas..." [(ngModel)]="filtro" />
+            </div>
+
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Diagnosticos</th>
+                            <th>Tratamientos</th>
+                            <th>Observaciones</th>
+                            <th>Creador del Informe</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="informesMedicos && informesMedicos.length > 0">
+                        <tr *ngFor="let informe of informesMedicos | filter: filtro">
+                            <td>{{ informe.fechaCreacion }}</td>
+                            <td>{{ informe.diagnosticos }}</td>
+                            <td>{{ informe.tratamientos }}</td>
+                            <td>{{ informe.observaciones }}</td>
+                            <td>{{ informe.usuarioCreador }}</td>
+                            <td>{{ informe.estado }}</td>
+                            <td>
+                                <div class="acciones">
+                                    <button class="btn-eliminar" (click)="eliminarInforme(informe.id)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    <button class="btn-editar" (click)="editarInforme(informe.id, informe)">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!informesMedicos || informesMedicos.length === 0">
+                        <tr>
+                            <td colspan="7">No hay Informes Medicos de {{ mascota?.nombreMascota}}.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="formulario" *ngIf="mostrarFormulario">
+        <div class="formulario-contenido">
+            <h3>{{ modoEdicion ? 'Editar Informes Médicos' : 'Crear Nueva Informes Médicos' }}</h3>
+            <form (ngSubmit)="guardarInforme()" #informeMedicoForm="ngForm">
+
+                <div class="campo">
+                    <label for="diagnosticos">Diagnósticos:</label>
+                    <textarea id="observaciones" [(ngModel)]="informeMedico.diagnosticos" name="diagnosticos"
+                        required></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="tratamientos">Tratamientos:</label>
+                    <textarea id="tratamientos" [(ngModel)]="informeMedico.tratamientos" name="tratamientos"
+                        required></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea id="tratamientos" [(ngModel)]="informeMedico.observaciones" name="observaciones"
+                        required></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="usuarioCreador">Creador del Informe:</label>
+                    <input id="tratamientos" [(ngModel)]="informeMedico.usuarioCreador" name="usuarioCreador"
+                        required />
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" [(ngModel)]="informeMedico.estado" name="estado">
+                        <option value="activo">Activo</option>
+                        <option value="archivado">Archivado</option>
+                    </select>
+                </div>
+
+                <!-- Área para mostrar mensajes -->
+                <div *ngIf="mensaje" class="alerta" [class.error]="esError" [class.exito]="!esError">
+                    {{ mensaje }}
+                </div>
+
+                <div class="botones">
+                    <button type="submit" class="btn-guardar">Guardar</button>
+                    <button type="button" class="btn-cancelar" (click)="cerrarFormulario()">Cancelar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+
+<!-- Ventana emergente de notificación -->
+<div class="formulario-confir" *ngIf="mostrarFormularioNotificacion">
+    <div class="formulario-contenido-confir">
+        <i class="bi bi-check-circle-fill"></i>
+        <h1>{{ mensajeCreacionEdicion}}</h1>
+    </div>
+</div>
+
+
+<!-- Ventana Modal de Confirmación -->
+<div class="formulario" *ngIf="mostrarModal">
+    <div class="formulario-contenido">
+        <h3>¿Estás seguro de que deseas eliminar este informe médico?</h3>
+        <h3>Esta acción es irreversible</h3>
+        <div class="acciones">
+            <button class="button-confirmar-si" (click)="confirmarEliminacion(true)">Sí</button>
+            <button class="button-confirmar-no" (click)="confirmarEliminacion(false)">No</button>
+        </div>
+    </div>
+</div>

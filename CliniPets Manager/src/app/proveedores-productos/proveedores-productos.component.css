@@ -1,0 +1,844 @@
+/* Estilo para el contenedor del título */
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .input-buscar {
+    margin-right: 20px;
+    padding: 5px;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .titulo h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .proveedorProductos-container {
+    margin: 20px;
+  }
+  
+  
+  /* Barra de búsqueda */
+  .barra-busqueda {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .barra-busqueda input {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Estilos generales para la tabla */
+  table {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+    border-collapse: collapse;
+    margin-top: 10px;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  th, td {
+    width: 14%; /* Porcentaje igual para las columnas */
+    padding: 10px;
+    text-align: left; /* Centrar el texto */
+    overflow: hidden; /* Oculta texto que exceda el ancho */
+    text-overflow: ellipsis; /* Indica contenido desbordado con "..." */
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Impide que el texto se desborde a otra línea */
+  }
+  
+  /* Específico para la columna de acciones si necesitas ajuste adicional */
+  th:last-child, td:last-child {
+    width: 14%; /* Ajusta el ancho para que las acciones no ocupen más espacio */
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  
+  .tituloMascotas{
+    margin-left: 20px;
+  }
+  
+  .tabla-contenedor {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Añade sombra */
+  }
+  
+  th {
+    color: rgb(0, 0, 0); /* Texto blanco para los encabezados */
+  }
+  
+  td {
+    font-size: 14px;
+  }
+  
+  
+  p {
+    text-align: center;
+    font-size: 16px;
+    color: #999;
+  }
+  
+  .formulario-contenido {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;  /* Limitar el ancho máximo */
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto; /* Desplazamiento horizontal si el contenido excede el ancho */
+  }
+  
+  .formulario {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: auto; /* Permite desplazarse si el contenido es muy grande */
+  }
+  
+  /* Estilo del título */
+  .formulario-contenido h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Estilo del formulario */
+  .formulario-contenido form {
+    width: 100%;
+  }
+  
+  .formulario-contenido input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Botones */
+  td > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    padding: 8px 12px;
+    font-size: 14px;
+    margin: 0 5px;
+  }
+  
+  .campo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .campo label {
+    width: 150px; /* Ajusta según el espacio deseado */
+    font-weight: bold;
+  }
+  
+  .campo input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .mensaje-exito {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000; /* Mayor que otros elementos */
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .no-data {
+    text-align: center;
+    font-size: 16px;
+    color: #999;
+    padding: 20px;
+  }
+  
+  /* Estilo para campos inválidos */
+  input.ng-invalid, select.ng-invalid {
+    border: 1px solid red;
+  }
+  
+  input.ng-valid, select.ng-valid {
+    border: 1px solid green;
+  }
+  
+  /* Mensajes de error */
+  .error {
+    color: red;
+    font-size: 12px;
+  }
+  
+  /* Resaltar campos con borde rojo si están vacíos */
+  input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+    border-color: red;
+  }
+  
+  input.ng-valid.ng-touched, select.ng-valid.ng-touched {
+    border-color: green;
+  }
+  
+  /* Mensaje "Llene todos los campos" */
+  .error {
+    font-size: 14px;
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilo para el modal */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-contenido {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .modal-contenido h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  button.confirm {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button.cancel {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .formulario-contenido {
+      padding: 15px;  /* Reducir el padding */
+      width: 90%;      /* Hacer el formulario más pequeño */
+      max-width: 400px; /* Limitar el ancho máximo */
+    }
+  
+    .campo input,
+    .campo select,
+    .campo textarea {
+      width: 100%; /* Asegura que los campos llenen el ancho disponible */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .formulario-contenido {
+      padding: 10px;
+      max-width: 350px;  /* Asegurar un tamaño pequeño en pantallas más pequeñas */
+    }
+  }
+  
+  .formulario-contenido {
+    max-height: 80vh;  /* Establecer una altura máxima */
+    overflow-y: auto;  /* Añadir desplazamiento vertical si el contenido excede la altura */
+  }
+  
+  /* Botones dentro de la tabla */
+  button {
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+  }
+  
+  button:hover {
+    background-color: #ddd;
+  }
+  
+  button:disabled {
+    cursor: not-allowed;
+    background-color: #e0e0e0;
+  }
+  
+  .btn-agregar {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .btn-agregar:hover {
+    background-color: #45a049;
+  }
+  
+  .btn-agregar{
+    margin-right: 20px;
+  }
+  
+  /* Estilo para el icono de basura en la columna de acciones */
+  .btn-eliminar {
+    background: none;
+    border: none;
+    color: #ff0000; /* Rojo */
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .btn-eliminar:hover {
+    color: #720200;
+  }
+  
+  .btn-eliminar i {
+    font-size: 20px; /* Ajusta el tamaño del ícono */
+  }
+  
+  .btn-editar {
+    background: none;
+    color: #002fff;
+  }
+  
+  .btn-editar:hover {
+    color: rgb(0, 3, 151);
+  }
+  
+  .btn-editar i {
+    font-size: 20px; /* Ajusta el tamaño del ícono */
+  }
+  
+  .btn-ver {
+    background: none;
+    border: none;
+    color: green; /* Color azul para el ojo */
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .btn-ver:hover {
+    color: rgb(0, 110, 0); /* Un color más oscuro cuando el cursor pasa sobre el ícono */
+  }
+  
+  .btn-ver i {
+    font-size: 20px; /* Ajusta el tamaño del ícono */
+  }
+  
+  .botones button:first-child {
+    background-color: #4CAF50; /* Verde para 'Sí' */
+    color: white;
+  }
+  
+  .botones button:first-child:hover {
+    background-color: #45a049;
+  }
+  
+  .botones button:last-child {
+    background-color: #f44336; /* Rojo para 'No' */
+    color: white;
+  }
+  
+  .botones button:last-child:hover {
+    background-color: #e53935;
+  }
+  
+  .botones button {
+    padding: 10px 20px;
+    margin: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  
+  .botones button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .botones button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .botones button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  .botones button[type="button"] {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .botones button[type="button"]:hover {
+    background-color: #e53935;
+  }
+  
+  .paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 5px;
+  }
+  
+  .paginacion button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .paginacion button.active {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .paginacion button:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: left;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 20px;
+  }
+  
+  .modal-content p {
+    margin: 10px 0;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  button.confirm {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button.confirm:hover {
+    background-color: #45a049;
+  }
+  
+  .boton-ver-mas {
+    background-color: transparent; /* Elimina el fondo */
+    border: none; /* Elimina el borde */
+    color: inherit; /* Usa el color del texto del contenedor */
+    font-size: 12px; /* Ajusta el tamaño del texto */
+    padding: 0; /* Elimina cualquier relleno adicional */
+    cursor: pointer; /* Muestra el cursor de puntero */
+    text-decoration: underline; /* Opcional, para que parezca un enlace */
+  }
+  
+  .boton-ver-mas:hover {
+    text-decoration: none; /* Opcional, quita el subrayado al pasar el cursor */
+  }
+  
+  .btn-guardar {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid blue; /* Borde para depuración */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  
+  .btn-guardar:hover {
+    background-color: #007e06; /* Verde más oscuro al pasar el cursor */
+  }
+  
+  .btn-cancelar {
+    padding: 10px 20px;
+    background-color: #f44336; /* Rojo */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .btn-cancelar:hover {
+    background-color: #e53935; /* Rojo más oscuro al pasar el cursor */
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: space-around; /* Distribuye los botones con espacio entre ellos */
+    gap: 10px; /* Espaciado entre los botones */
+  }
+  
+  .btn-aceptar-eliminacion, .btn-rechazar-eliminacion {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .mensaje-dinamico {
+    position: fixed;
+    top: 100px; /* Cambia esto para posicionar más abajo el mensaje */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4caf50; /* Verde para éxito */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    z-index: 1000;
+    animation: fadeInOut 2s;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% {
+      opacity: 0;
+    }
+    20%, 80% {
+      opacity: 1;
+    }
+  }
+  
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Ajusta la altura del modal para que sea desplazable */
+  .modal-contenido {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-height: 80vh; /* Altura máxima del modal */
+    overflow-y: auto; /* Desplazamiento vertical */
+  }
+  
+  .tabla-scroll {
+    max-height: 50vh; /* Altura máxima para la tabla */
+    overflow-y: auto; /* Desplazamiento vertical */
+    margin-top: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .input-buscar-raza {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  
+  .btn-modal {
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .btn-modal:hover {
+    background-color: #00109e;
+  }
+  
+  .buttonR{
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .buttonR:hover {
+    background-color: #00109e;
+  }
+  
+  .buttonC{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .buttonC:hover {
+    background-color: #800101;
+  }
+  
+  /* Estado habilitado (verde) */
+  .btn-enabled {
+    background-color: #4caf50; /* Verde */
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-enabled:hover {
+    background-color: #45a049; /* Verde más oscuro */
+  }
+  
+  /* Estado deshabilitado (gris/blanco) */
+  .btn-disabled {
+    background-color: #fff !important; /* Fondo blanco */
+    color: #ccc !important; /* Texto gris claro */
+    cursor: not-allowed !important; /* Cursor no permitido */
+    opacity: 0.5 !important; /* Apariencia tenue */
+    border: 1px solid #ccc !important; /* Borde gris claro */
+    box-shadow: none !important; /* Sin sombras */
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px; /* Espacio entre el input y el mensaje */
+    display: block; /* Asegura que el mensaje esté en una nueva línea */
+  }
+  
+  /* Estilos del modal personalizado */
+.modal-personalizado {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  max-width: 90%;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 1000;
+  height: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-contenido-personalizado {
+  text-align: center;
+  height: 560px;
+  max-height: 80vh;
+}
+
+.modal-titulo-personalizado {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Estilo del campo de búsqueda */
+.input-busqueda-personalizada {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+/* Tabla con scroll */
+.tabla-scroll-personalizada {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+
+.tabla-proveedores-personalizada {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-proveedores-personalizada th, 
+.tabla-proveedores-personalizada td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-proveedores-personalizada th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Botón seleccionar */
+.boton-seleccionar-personalizado {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.boton-seleccionar-personalizado:hover {
+  background-color: #0056b3;
+}
+
+/* Botón cerrar */
+.boton-cerrar-personalizado {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.boton-cerrar-personalizado:hover {
+  background-color: darkred;
+}

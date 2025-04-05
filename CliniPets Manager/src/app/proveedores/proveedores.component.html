@@ -1,0 +1,147 @@
+<div class="proveedor-container">
+  <div class="titulo">
+    <h2>Proveedores</h2>
+    <div>
+      <input type="text" id="buscar" placeholder="Buscar proveedor..." [(ngModel)]="filtro" class="input-buscar" />
+      <button class="btn-agregar" (click)="abrirFormulario()">
+        <i class="fa fa-database"></i> Agregar Nuevo
+      </button>
+    </div>
+  </div>
+
+  <table class="tabla-contenedor">
+    <thead>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+      <tr>
+        <th>Proveedor</th>
+        <th>Descripcion</th>
+        <th>Telefono Principal</th>
+        <th>Correo Electronico</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="proveedores && proveedores.length > 0">
+      <tr *ngFor="let p of proveedores | filter: filtro">
+        <td>{{ p.nombreProveedor }}</td>
+        <td>{{ p.descripcion }}</td>
+        <td>{{ p.telefonoPrincipal }}</td>
+        <td>{{ p.correoElectronico }}</td>
+        <td>{{ p.estado }}</td>
+        <td>
+          <button (click)="eliminarProveedor(p.id,p.nombreProveedor)" class="btn-eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+          <button (click)="editarProveedor(p)" class="btn-editar">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn-ver" (click)="verDetallesProveedor(p)">
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <p *ngIf="!proveedores || proveedores.length === 0">No hay proveedores disponibles.</p>
+  </table>
+
+</div>
+
+
+
+<!-- Formulario Emergente -->
+<div class="formulario" *ngIf="mostrarFormulario">
+  <div class="formulario-contenido">
+    <h3>{{ modoEdicion ? 'Actualizar información' : 'Registrar Proveedor' }}</h3>
+    <form (ngSubmit)="agregarProveedor()">
+      <div class="campo">
+        <label for="nombreProveedor">Nombre del Proveedor:</label>
+        <input id="nombreProveedor" type="text" [(ngModel)]="proveedor.nombreProveedor" name="nombreProveedor" required />
+      </div>
+
+      <div class="campo">
+        <label for="cedulaJuridica">cedula Juridica:</label>
+        <input id="cedulaJuridica" type="text" [(ngModel)]="proveedor.cedulaJuridica" name="cedulaJuridica" required />
+      </div>
+
+      <div class="campo">
+        <label for="descripcion">Descripción:</label>
+        <input id="descripcion" type="text" [(ngModel)]="proveedor.descripcion" name="descripcion" required />
+      </div>
+
+      <div class="campo">
+        <label for="telefonoPrincipal">Telefono Principal:</label>
+        <input id="telefonoPrincipal" type="text" [(ngModel)]="proveedor.telefonoPrincipal" name="telefonoPrincipal"
+          required />
+      </div>
+
+      <div class="campo">
+        <label for="correoElectronico">Correo Electronico:</label>
+        <input id="correoElectronico" type="text" [(ngModel)]="proveedor.correoElectronico" name="correoElectronico"
+          required />
+      </div>
+
+        <div class="campo">
+          <label for="paginaWeb">Página Web:</label>
+          <input id="paginaWeb" type="text" [(ngModel)]="proveedor.paginaWeb" name="paginaWeb" required />
+        </div>
+
+      <div class="campo">
+        <label for="direccion">Direccion:</label>
+        <input id="direccion" type="text" [(ngModel)]="proveedor.direccion" name="direccion" required />
+      </div>
+
+      <div class="campo">
+        <label for="estado">Estado:</label>
+        <select id="estado" [(ngModel)]="proveedor.estado" name="estado" required>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
+      </div>
+
+      <div class="botones">
+        <button type="submit">Guardar</button>
+        <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+      </div>
+    </form>
+
+    <!-- <p *ngIf="mensajeExito" class="mensaje-exito">Proveedor agregado con éxito!</p> -->
+  </div>
+</div>
+
+<!-- Mensaje de Éxito -->
+<div *ngIf="mensajeExitoExistencia" class="mensaje-exito">
+  {{ mensajeExitoExistencia }}
+</div>
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <h2>Eliminar proveedor</h2>
+    <p>{{ modalEliminarMessage }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion" (click)="confirmarEliminacion(true)">Sí</button>
+      <button class="btn-rechazar-eliminacion" (click)="confirmarEliminacion(false)">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ventana Modal de Detalles del Proveedor -->
+<div class="modal" *ngIf="verModalVisible">
+  <div class="modal-content">
+    <h3>Detalles del Proveedor:</h3>
+    <div *ngIf="proveedorSeleccionado">
+      <p><strong>Nombre:</strong> {{ proveedorSeleccionado.nombreProveedor }}</p>
+      <p><strong>Cédula Jurídica:</strong> {{ proveedorSeleccionado.cedulaJuridica }}</p>
+      <p><strong>Descripción:</strong> {{ proveedorSeleccionado.descripcion }}</p>
+      <p><strong>Teléfono Principal:</strong> {{ proveedorSeleccionado.telefonoPrincipal }}</p>
+      <p><strong>Correo Electrónico:</strong> {{ proveedorSeleccionado.correoElectronico }}</p>
+      <p><strong>Página Web:</strong> {{ proveedorSeleccionado.paginaWeb }}</p>
+      <p><strong>Direccion:</strong> {{ proveedorSeleccionado.direccion }}</p>
+
+      <p><strong>Estado:</strong> {{ proveedorSeleccionado.estado }}</p>
+    </div>
+    <div class="modal-actions">
+      <button class="confirm" (click)="cerrarModalVer()">Cerrar</button>
+    </div>
+  </div>
+</div>

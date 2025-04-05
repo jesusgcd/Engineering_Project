@@ -1,0 +1,65 @@
+<div class="todo-container">
+  <div class="titulo">
+    <h2>Tareas finalizadas</h2>
+  </div>
+
+  <table class="tabla-contenedor">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of paginatedTasks">
+        <td>{{ task.createdAt| date: 'short' }}</td>
+        <td>{{ task.name }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>
+          <button
+          class="btn-eliminar"
+          title="Eliminar tarea finalizada"
+          (click)="openDeleteModal(task)"
+        >
+          <i class="bi bi-trash"></i>
+        </button>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<!-- Mensaje cuando no hay tareas -->
+<p *ngIf="tasks.length === 0" class="no-tasks-message">No tienes tareas finalizadas.</p>
+
+<!-- Controles de paginación -->
+<div class="pagination-controls">
+  <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+  <button *ngFor="let page of generatePageNumbers()" [class.active]="currentPage === page" (click)="goToPage(page)">
+    {{ page }}
+  </button>
+  <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Siguiente</button>
+</div>
+</div>
+
+
+  <!-- Modal de confirmación -->
+<div class="modal" *ngIf="modalVisible">
+  <div class="modal-contenido">
+    <h3>Confirmar eliminación</h3>
+    <p>¿Estás seguro de que deseas eliminar la tarea "{{ selectedTask?.name }}"?</p>
+    <div class="botones">
+      <button class="btn-confirmar" (click)="confirmDelete()">Eliminar</button>
+      <button class="btn-cancelar" (click)="cancelDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="mensaje-dinamico" *ngIf="mensajeDinamico">
+  {{ mensajeDinamico }}
+</div>

@@ -1,0 +1,520 @@
+/* Estilo para el contenedor del título */
+.titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.producto-container {
+  margin: 20px;
+}
+
+
+.titulo h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.btn-agregar {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; justify-content: flex-end; margin-bottom: 20px;
+  align-items: center;
+}
+
+.btn-agregar:hover {
+  background-color: #45a049;
+}
+
+/* Barra de búsqueda */
+.barra-busqueda {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.barra-busqueda label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.barra-busqueda input {
+  padding: 8px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Estilos generales para la tabla */
+table {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Fondo blanco con 80% de opacidad */
+  border-collapse: collapse;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.tabla-contenedor {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  /* Añade sombra */
+}
+
+th {
+
+  color: rgb(0, 0, 0);
+  /* Texto blanco para los encabezados */
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+td {
+  font-size: 14px;
+}
+
+/* Botones dentro de la tabla */
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f4f4f4;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: #e0e0e0;
+}
+
+/* Estilo para el icono de basura en la columna de acciones */
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: #f44336;
+  /* Rojo */
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-eliminar:hover {
+  color: #e53935;
+}
+
+.btn-eliminar i {
+  font-size: 20px;
+  /* Ajusta el tamaño del ícono */
+}
+
+
+.btn-editar {
+  background-color: #1b96dd;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.btn-editar:hover {
+  background-color: #0d72ad;
+}
+
+
+/* Mensaje de no productos disponibles */
+p {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+}
+
+/* Estilo del fondo oscuro */
+.formulario {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Permitir desplazamiento en el contenedor principal del formulario */
+.formulario-contenido {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  /* Altura máxima del formulario */
+  overflow-y: auto;
+  /* Activar el scroll vertical */
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Estilo del título */
+.formulario-contenido h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilo del formulario */
+.formulario-contenido form {
+  width: 100%;
+}
+
+.formulario-contenido input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Botones */
+td>button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  padding: 8px 12px;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+/* Contenedor de botones (para centrar horizontalmente) */
+.botones {
+  display: flex;
+  /* Activa el uso de flexbox */
+  justify-content: center;
+  /* Centra los botones horizontalmente */
+  gap: 10px;
+  /* Espaciado entre los botones */
+  margin-top: 20px;
+  /* Espaciado superior */
+}
+
+/* Botones en general (estilo uniforme) */
+.botones button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Botón de guardar */
+.botones button[type="submit"] {
+  background-color: #4CAF50;
+  /* Verde */
+  color: white;
+}
+
+.botones button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Botón de cancelar */
+.botones button[type="button"] {
+  background-color: #f44336;
+  /* Rojo */
+  color: white;
+}
+
+.botones button[type="button"]:hover {
+  background-color: #e53935;
+}
+
+
+.campo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.campo label {
+  width: 150px;
+  /* Ajusta según el espacio deseado */
+  font-weight: bold;
+}
+
+.campo input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+
+.mensaje-exito {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  /* Mayor que otros elementos */
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tituloExpediente {
+  margin-left: 10px;
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+.paginacion button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.paginacion button.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.paginacion button:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.botonCrearExpe {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  /* display: flex; justify-content: flex-end; margin-bottom: 20px; */
+  align-items: center;
+}
+
+.botonCrearExper:hover {
+  background-color: #45a049;
+}
+
+.alerta {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.alerta.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+}
+
+.alerta.exito {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+}
+
+
+
+/* Estilo del fondo oscuro */
+.formulario-confir {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Fondo oscuro más suave */
+  font: 30px Arial;
+  display: flex;
+  justify-content: center;
+  /* Centrar horizontalmente */
+  align-items: flex-start;
+  /* Asegura que quede en la parte superior */
+  padding-top: 20px;
+  /* Separación desde el borde superior */
+  box-sizing: border-box;
+}
+
+/* Contenedor central */
+.formulario-contenido-confir {
+  background-color: #d4edda;
+  /* Verde claro para fondo */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  /* Sombra más ligera */
+  width: 450px;
+  max-width: 90%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  /* Asegura alineación vertical */
+  align-items: center;
+  /* Asegura que el contenido esté centrado horizontalmente */
+  border: 1px solid #c3e6cb;
+  /* Borde verde claro */
+}
+
+/* Texto */
+h1 {
+  color: #155724;
+  /* Verde oscuro para el texto */
+  margin: 10px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* Icono */
+.formulario-contenido-confir i {
+  font-size: 40px;
+  color: #155724;
+  /* Verde oscuro para el ícono */
+}
+
+
+.button-confirmar-si {
+  background-color: #ff0202;
+  border-radius: 8px;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+
+
+  font-size: 100%;
+
+
+  padding: 10px 21px;
+
+  transition: color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
+
+}
+
+.button-confirmar-si:active {
+  background-color: #ff020285;
+}
+
+.button-confirmar-si:hover {
+  background-color: #ff020285;
+}
+
+.button-confirmar-no {
+  appearance: button;
+  background-color: #0276FF;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: "RM Neue", sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 21px;
+  text-align: center;
+  text-transform: none;
+  transition: color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-confirmar-no:active {
+  background-color: #0276FF85;
+}
+
+.button-confirmar-no:hover {
+  background-color: #0276FF85;
+}
+
+
+/* Contenedor de los botones de acciones */
+.acciones {
+  display: flex; /* Alinea los botones en fila */
+  gap: 10px; /* Espaciado entre los botones */
+  justify-content: center; /* Centra los botones horizontalmente */
+  align-items: center; /* Centra los botones verticalmente */
+}
+
+/* Botones dentro de la tabla */
+.acciones button {
+  display: inline-flex; /* Asegura que los íconos se alineen correctamente */
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px; /* Ajusta el padding para que los botones sean consistentes */
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+}
+
+.btn-eliminar {
+  background: none;
+  color: #f44336; /* Rojo */
+}
+
+.btn-eliminar:hover {
+  color: #e53935; /* Rojo más oscuro */
+}
+
+.btn-editar {
+  background-color: #1b96dd; /* Azul */
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: #0d72ad; /* Azul más oscuro */
+}

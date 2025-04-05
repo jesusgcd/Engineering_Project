@@ -1,0 +1,103 @@
+<div class="gestion-especialistas-container">
+  <div class="header">
+    <h1>Gestión de Especialistas</h1>
+    <button class="btn-add" (click)="abrirFormulario()">
+      <i class="fa fa-plus"></i> Agregar Especialista
+    </button>
+  </div>
+
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Especialidad</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let especialista of especialistas">
+        <td>{{ especialista.nombre }}</td>
+        <td>{{ especialista.especialidad }}</td>
+        <td>{{ especialista.correo }}</td>
+        <td>{{ especialista.telefono }}</td>
+
+        <td>
+          <button (click)="editarEspecialista(especialista)" class="btn-edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button (click)="eliminarEspecialista(especialista.id!)" class="btn-delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Formulario Emergente -->
+  <div class="form-container" *ngIf="mostrarFormulario">
+    <div class="form-content">
+      <h3>{{ modoEdicion ? 'Editar Especialista' : 'Nuevo Especialista' }}</h3>
+      <form (ngSubmit)="guardarEspecialista()" #formulario="ngForm" novalidate>
+        <div class="input-group">
+          <label for="nombre">Nombre:</label>
+          <input id="nombre" type="text" [(ngModel)]="especialista.nombre" name="nombre" required #nombre="ngModel" />
+          <div *ngIf="nombre.invalid && nombre.touched" class="error-mensaje">
+            <p>El nombre es obligatorio.</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="especialidad">Especialidad:</label>
+          <input id="especialidad" type="text" [(ngModel)]="especialista.especialidad" name="especialidad" required #especialidad="ngModel" />
+          <div *ngIf="especialidad.invalid && especialidad.touched" class="error-mensaje">
+            <p>La especialidad es obligatoria.</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="correo">Correo:</label>
+          <input id="correo" type="text" [(ngModel)]="especialista.correo" name="correo" required #correo="ngModel" />
+          <div *ngIf="correo.invalid && correo.touched" class="error-mensaje">
+            <p>El correo es obligatorio.</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="telefono">Teléfono:</label>
+          <input id="telefono" type="text" [(ngModel)]="especialista.telefono" name="telefono" required #telefono="ngModel" />
+          <div *ngIf="telefono.invalid && telefono.touched" class="error-mensaje">
+            <p>El teléfono es obligatorio.</p>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="formulario.invalid" class="btn-guardar">Guardar</button>
+          <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <h2>Eliminar especialista</h2>
+    <p>{{ modalEliminarMessage }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion rojo" (click)="confirmarEliminacionEspecialista(true)">Sí</button>
+      <button class="btn-rechazar-eliminacion verde" (click)="confirmarEliminacionEspecialista(false)">No</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Ventana Modal de correo -->
+<div class="modal" *ngIf="mostrarModalcorreo">
+  <div class="modal-contenido">
+    <h2>Correo inválido</h2>
+    <p>{{ modalMensaje }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion rojo" (click)="mostrarModalcorreo = false">Aceptar</button>
+    </div>
+  </div>
+</div>

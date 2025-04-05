@@ -1,0 +1,391 @@
+.todo-container {
+  margin: 20px;
+}
+
+.titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-agregar {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-agregar:hover {
+  color: #007c04;
+}
+
+
+.btn-hecho{
+  color: #9fb100;
+  background-color: transparent;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-hecho:hover {
+  color: #626d00;
+}
+
+.btn-hecho i {
+  font-size: 20px; /* Ajusta el tamaño del ícono */
+}
+
+.btn-editar{
+  color: blue;
+  background-color: transparent;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-editar:hover {
+  color: rgb(0, 0, 161);
+}
+
+.btn-editar i {
+  font-size: 20px; /* Ajusta el tamaño del ícono */
+}
+
+.btn-eliminar{
+  color: red;
+  background-color: transparent;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  color: rgb(134, 0, 0);
+}
+
+.btn-eliminar i {
+  font-size: 20px; /* Ajusta el tamaño del ícono */
+}
+
+/* Estilos generales para la tabla */
+table {
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+  border-collapse: collapse;
+  margin-top: 10px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+th, td {
+  width: 14%; /* Porcentaje igual para las columnas */
+  padding: 10px;
+  text-align: left; /* Centrar el texto */
+  overflow: hidden; /* Oculta texto que exceda el ancho */
+  text-overflow: ellipsis; /* Indica contenido desbordado con "..." */
+  border: 1px solid #ddd;
+  white-space: nowrap; /* Impide que el texto se desborde a otra línea */
+}
+
+/* Específico para la columna de acciones si necesitas ajuste adicional */
+th:last-child, td:last-child {
+  width: 14%; /* Ajusta el ancho para que las acciones no ocupen más espacio */
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.tituloMascotas{
+  margin-left: 20px;
+}
+
+.tabla-contenedor {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Añade sombra */
+}
+
+th {
+  color: rgb(0, 0, 0); /* Texto blanco para los encabezados */
+}
+
+td {
+  font-size: 14px;
+}
+
+/* Estilo general del formulario */
+.formulario {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo más oscuro para el overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor del formulario */
+.formulario-contenido {
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 30px; /* Más espacio interno */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra suave */
+  width: 400px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out; /* Animación al mostrar */
+}
+
+/* Animación para que aparezca suavemente */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Título del formulario */
+.formulario-contenido h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilo de los campos */
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  border-color: #4caf50; /* Borde verde al enfocar */
+}
+
+/* Botones */
+.botones {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espaciado entre los botones */
+}
+
+.botones button {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.botones button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+}
+
+.botones button[type="submit"]:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.botones button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.botones button[type="button"]:hover {
+  background-color: #e53935;
+  transform: scale(1.05);
+}
+
+.no-tasks-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #888;
+}
+
+
+/* Estilos del modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-contenido {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.modal-contenido h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.modal-contenido p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.btn-confirmar {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-confirmar:hover {
+  background-color: #e53935;
+}
+
+.btn-cancelar {
+  background-color: #ff0000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background-color: #7e0000;
+}
+
+
+.botones button:disabled {
+  background-color: #fff !important; /* Fondo blanco */
+  color: #ccc !important; /* Texto gris claro */
+  cursor: not-allowed !important; /* Cursor no permitido */
+  opacity: 0.5 !important; /* Apariencia tenue */
+  border: 1px solid #ccc !important; /* Borde gris claro */
+  box-shadow: none !important; /* Sin sombras */
+}
+
+
+
+/* Personalización opcional para el modal de completar tarea */
+.modal .btn-confirmar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.modal .btn-confirmar:hover {
+  background-color: #006e06;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pagination-controls button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination-controls button:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
+
+.pagination-controls button.active {
+  background-color: #4caf50; /* Verde */
+  color: white;
+  border-color: #4caf50;
+  font-weight: bold;
+}
+
+
+.mensaje-dinamico {
+  position: fixed;
+  top: 100px; /* Cambia esto para posicionar más abajo el mensaje */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; /* Verde para éxito */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  z-index: 1000;
+  animation: fadeInOut 2s;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+  }
+  20%, 80% {
+    opacity: 1;
+  }
+}

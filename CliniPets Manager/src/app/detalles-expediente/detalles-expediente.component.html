@@ -1,0 +1,199 @@
+<!-- Contenedor Principal -->
+<div class="container mt-5 detalles-expediente">
+  <!-- Tarjeta de Información General -->
+  <div class="card mb-5 shadow tarjeta-informacion tabla-contenedor">
+    <div class="card-header bg-primary text-white text-center">
+      <h3><i class="bi bi-info-circle"></i> Información General de la Mascota</h3>
+    </div>
+    <div class="card-body row">
+      <!-- Primera Columna: Información básica de la mascota -->
+      <div class="col-md-6 mb-3">
+        <p><strong><i class="bi bi-paw"></i> Nombre:</strong> {{ mascota?.nombreMascota }}</p>
+        <p><strong><i class="bi bi-gender-ambiguous"></i> Sexo:</strong> {{ mascota?.sexo }}</p>
+        <p><strong><i class="bi bi-egg"></i> Especie:</strong> {{ mascota?.especie }}</p>
+        <p><strong><i class="bi bi-calendar-event"></i> Fecha Nacimiento:</strong> {{ mascota?.fechaNacimiento | date }}
+        </p>
+      </div>
+      <!-- Segunda Columna: Información del dueño -->
+      <div class="col-md-6 mb-3">
+        <p><strong><i class="bi bi-person"></i> Dueño:</strong> {{ mascota?.nombreDueno }}</p>
+        <p><strong><i class="bi bi-telephone"></i> Teléfono:</strong> {{ mascota?.contactoDueno?.telefono }}</p>
+        <p><strong><i class="bi bi-envelope"></i> Correo:</strong> {{ mascota?.contactoDueno?.correo }}</p>
+        <p><strong><i class="bi bi-calendar-event"></i> Fecha Creación Expediente:</strong> {{
+          expediente?.fechaCreacionExpediente }}</p>
+      </div>
+    </div>
+    <!-- Botón para Volver Atrás -->
+    <div class="volver-atras">
+      <button class="btn-volver" (click)="volverAtras()">
+        <i class="bi bi-arrow-left"></i> Volver Atrás
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Sección de Tablas -->
+  <div class="row">
+    <!-- Tabla 1: Hojas de Internamiento -->
+    <div class="col-12 mb-4">
+      <div class="card shadow tabla-contenedor">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+          <h4><i class="bi bi-file-earmark-medical"></i> Hojas de Internamiento</h4>
+          <button class="btn-agregar" (click)="gestionarHojasInternamiento(idExpediente, idMascota)">
+            <i class="fa fa-database"></i> Gestionar Hoja de Internamiento
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha de Ingreso</th>
+                  <th>Fecha de Egreso</th>
+                  <th>Diagnóstico</th>
+                  <th>Tratamiento</th>
+                  <th>Observaciones</th>
+                  <th>Creador</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let hoja of hojaInternamientos">
+                  <td>{{ hoja.fechaIngreso }}</td>
+                  <td>{{ hoja.fechaEgreso || 'En curso' }}</td>
+                  <td>{{ hoja.diagnostico }}</td>
+                  <td>{{ hoja.tratamiento }}</td>
+                  <td>{{ hoja.observaciones }}</td>
+                  <td>{{ hoja.usuarioCreador }}</td>
+                  <td>{{ hoja.estado }}</td>
+                </tr>
+                <tr *ngIf="!hojaInternamientos || hojaInternamientos.length === 0">
+                  <td colspan="7">No hay hojas de internamiento para {{ mascota?.nombreMascota }}.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla 2: Notas de Seguimiento -->
+    <div class="col-12 mb-4">
+      <div class="card shadow tabla-contenedor">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+          <h4><i class="bi bi-journal-text"></i> Notas de Seguimiento</h4>
+          <button class="btn-agregar" (click)="gestionarNotasSeguimiento(idExpediente, idMascota)">
+            <i class="fa fa-database"></i> Gestionar Notas de Seguimiento
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha de Creación</th>
+                  <th>Observaciones</th>
+                  <th>Estado</th>
+                  <th>Creador</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let nota of notasSeguimiento">
+                  <td>{{ nota.fechaCreacion }}</td>
+                  <td>{{ nota.observaciones }}</td>
+                  <td>{{ nota.estado }}</td>
+                  <td>{{ nota.usuarioCreador }}</td>
+                </tr>
+                <tr *ngIf="!notasSeguimiento || notasSeguimiento.length === 0">
+                  <td colspan="4">No hay notas de seguimiento para {{ mascota?.nombreMascota }}.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla 3: Informes Médicos -->
+    <div class="col-12 mb-4">
+      <div class="card shadow tabla-contenedor">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+          <h4><i class="bi bi-file-earmark-text"></i> Informes Médicos</h4>
+          <button class="btn-agregar" (click)="gestionarInformesMedicos(idExpediente, idMascota)">
+            <i class="fa fa-database"></i> Gestionar Informes Médicos
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Diagnósticos</th>
+                  <th>Tratamientos</th>
+                  <th>Observaciones</th>
+                  <th>Creador</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let informe of informesMedicos">
+                  <td>{{ informe.fechaCreacion }}</td>
+                  <td>{{ informe.diagnosticos }}</td>
+                  <td>{{ informe.tratamientos }}</td>
+                  <td>{{ informe.observaciones }}</td>
+                  <td>{{ informe.usuarioCreador }}</td>
+                  <td>{{ informe.estado }}</td>
+                </tr>
+                <tr *ngIf="!informesMedicos || informesMedicos.length === 0">
+                  <td colspan="6">No hay informes médicos para {{ mascota?.nombreMascota }}.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla 4: Seguimiento de Vacunas -->
+    <div class="col-12 mb-4">
+      <div class="card shadow tabla-contenedor">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+          <h4><i class="bi bi-folder"></i> Seguimiento de Vacunas</h4>
+          <button class="btn-agregar" (click)="gestionarVacunas(idExpediente, idMascota)">
+            <i class="fa fa-database"></i> Gestión de Vacunas
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Vacuna</th>
+                  <th>Fecha de Aplicación</th>
+                  <th>Próxima Dosis</th>
+                  <th>Observaciones</th>
+                  <th>Estado</th>
+                  <th>Creador</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vacuna of vacunasSeguimiento">
+                  <td>{{ vacuna.tipoVacuna }}</td>
+                  <td>{{ vacuna.fechaAplicacion }}</td>
+                  <td>{{ vacuna.fechaProximaDosis || 'No programada' }}</td>
+                  <td>{{ vacuna.observaciones }}</td>
+                  <td>{{ vacuna.estado }}</td>
+                  <td>{{ vacuna.usuarioResponsable }}</td>
+                </tr>
+                <tr *ngIf="!vacunasSeguimiento || vacunasSeguimiento.length === 0">
+                  <td colspan="6">No hay registros de vacunas para {{ mascota?.nombreMascota }}.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

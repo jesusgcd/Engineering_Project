@@ -1,0 +1,212 @@
+<div class="citas-container">
+  <div class="titulo">
+    <h1 class="titulo-citas">Gestión de Citas</h1>
+    <button class="btn-agregar" (click)="abrirFormulario()">
+      <i class="fa fa-plus"></i> Agregar Nueva Cita
+    </button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="barra-busqueda">
+    <label for="buscar">Buscar:</label>
+    <input
+      type="text"
+      id="buscar"
+      placeholder="Buscar por nombre..."
+      [(ngModel)]="filtroNombre"
+    />
+    
+    <label for="fecha">Filtrar por fecha:</label>
+    <input
+      type="date"
+      id="fecha"
+      [(ngModel)]="filtroFecha"
+    />
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar Filtros</button>
+  </div>
+
+  <!-- Tabla de citas -->
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Descripción</th>
+        <th>Sala</th>
+        <th>Especialista</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cita of citas | filter: filtroNombre | filter: filtroFecha">
+        <td>{{ cita.nombre }}</td>
+        <td>{{ cita.telefono }}</td>
+        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.hora }}</td>
+        <td>{{ cita.descripcion }}</td>
+        <td>{{ obtenerNombreSala(cita.sala) }}</td>
+        <td>{{ obtenerNombreEspecialista(cita.especialista) }}</td>
+        <td>
+          <button (click)="editarCita(cita)" class="btn-accion btn-editar">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button (click)="eliminarCita(cita.id)" class="btn-accion btn-eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="citas.length === 0">
+      <tr>
+        <td colspan="8" class="sin-datos">No hay citas disponibles.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Formulario Modal -->
+<div class="modal" *ngIf="mostrarFormulario">
+  <div class="modal-contenido">
+    <h3>{{ modoEdicion ? 'Editar Cita' : 'Nueva Cita' }}</h3>
+    <form #form="ngForm" (ngSubmit)="guardarCita()" novalidate>
+      <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input
+          id="nombre"
+          type="text"
+          [(ngModel)]="cita.nombre"
+          name="nombre"
+          required
+          #nombre="ngModel"
+        />
+        <div *ngIf="nombre.invalid && nombre.touched" class="error-mensaje">
+          <p>El nombre es obligatorio.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="telefono">Teléfono</label>
+        <input
+          id="telefono"
+          type="text"
+          [(ngModel)]="cita.telefono"
+          name="telefono"
+          required
+          #telefono="ngModel"
+        />
+        <div *ngIf="telefono.invalid && telefono.touched" class="error-mensaje">
+          <p *ngIf="telefono.errors?.['required']">El teléfono es obligatorio.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="fecha">Fecha</label>
+        <input
+          id="fecha"
+          type="date"
+          [(ngModel)]="cita.fecha"
+          name="fecha"
+          required
+          #fecha="ngModel"
+        />
+        <div *ngIf="fecha.invalid && fecha.touched" class="error-mensaje">
+          <p>La fecha es obligatoria.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="hora">Hora</label>
+        <input
+          id="hora"
+          type="time"
+          [(ngModel)]="cita.hora"
+          name="hora"
+          required
+          #hora="ngModel"
+        />
+        <div *ngIf="hora.invalid && hora.touched" class="error-mensaje">
+          <p>La hora es obligatoria.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="descripcion">Descripción</label>
+        <textarea
+          id="descripcion"
+          [(ngModel)]="cita.descripcion"
+          name="descripcion"
+          required
+          #descripcion="ngModel"
+        ></textarea>
+        <div *ngIf="descripcion.invalid && descripcion.touched" class="error-mensaje">
+          <p>La descripción es obligatoria.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="sala">Sala</label>
+        <select
+          id="sala"
+          [(ngModel)]="cita.sala"
+          name="sala"
+          required
+          #sala="ngModel"
+        >
+          <option *ngFor="let sala of salas" [value]="sala.id">{{ sala.nombre }}</option>
+        </select>
+        <div *ngIf="sala.invalid && sala.touched" class="error-mensaje">
+          <p>La sala es obligatoria.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="especialista">Especialista</label>
+        <select
+          id="especialista"
+          [(ngModel)]="cita.especialista"
+          name="especialista"
+          required
+          #especialista="ngModel"
+        >
+          <option *ngFor="let especialista of especialistas" [value]="especialista.id">
+            {{ especialista.nombre }}
+          </option>
+        </select>
+        <div *ngIf="especialista.invalid && especialista.touched" class="error-mensaje">
+          <p>El especialista es obligatorio.</p>
+        </div>
+      </div>
+      <div class="botones">
+        <button type="submit" class="btn-guardar" [disabled]="form.invalid">
+          Guardar
+        </button>
+        <button type="button" class="btn-cancelar" (click)="cerrarFormulario()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <h2>Eliminar cita</h2>
+    <p>{{ modalEliminarMessage }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion rojo" (click)="confirmarEliminacionCita(true)">Sí</button>
+      <button class="btn-rechazar-eliminacion verde" (click)="confirmarEliminacionCita(false)">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ventana Modal de choque -->
+<div class="modal" *ngIf="mostrarModalchoque">
+  <div class="modal-contenido">
+    <h2>Choque de horario</h2>
+    <p>{{ modalMensaje }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion rojo" (click)="mostrarModalchoque = false">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,9 @@
+<div *ngIf="showNavbar">
+  <div *ngIf="userRole === 'admin'">
+    <app-menu-principal-admin></app-menu-principal-admin>
+  </div>
+  <div *ngIf="userRole === 'user'">
+    <app-menu-principal></app-menu-principal>
+  </div>
+</div>
+<router-outlet></router-outlet>

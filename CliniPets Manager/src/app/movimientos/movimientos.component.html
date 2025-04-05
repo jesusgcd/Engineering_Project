@@ -1,0 +1,119 @@
+<div class="movimientos-container">
+  <div class="titulo">
+    <h1>Movimientos</h1>
+    <div class="barra-busqueda">
+      <label for="buscar-movimientos">Buscar:</label>
+      <input
+        type="text"
+        id="buscar-movimientos"
+        [(ngModel)]="filtro"
+        placeholder="Buscar movimientos..."
+        aria-label="Buscar movimientos"/>
+      <button class="btn-agregar" (click)="abrirFormulario()">
+        <i class="bi bi-database"></i> Agregar nuevo
+      </button>
+
+    </div>
+  </div>
+<table class="tabla-contenedor">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="Paginadas && Paginadas.length > 0">
+        <tr *ngFor="let movimiento of Paginadas| filter: filtro">
+          <td>{{ movimiento.codigo }}</td>
+          <td>{{ movimiento.nombre }}</td>
+          <td>{{ movimiento.descripcion }}</td>
+          <td>{{ movimiento.fecha | date: 'short' }}</td>
+          <td>
+            <!-- Botón Modificar -->
+            <button (click)="abrirFormulario(movimiento)" class="btn-editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <!-- Botón Eliminar -->
+            <button (click)="eliminarMovimiento(movimiento.id!)" class="btn-eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <p *ngIf="!Paginadas || Paginadas.length === 0">No se encontraron movimientos.</p>
+    </table>
+  </div>
+  <!-- Paginación -->
+<div class="paginacion">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+  <button *ngFor="let page of [].constructor(totalPages); let i = index"
+          (click)="goToPage(i + 1)"
+          [class.active]="currentPage === i + 1">
+    {{ i + 1 }}
+  </button>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+</div>
+
+
+  <!-- Formulario Emergente -->
+  <div class="formulario" *ngIf="mostrarFormulario">
+    <div class="formulario-contenido">
+      <h3>{{ modoEdicion ? 'Modificar Movimiento' : 'Registrar Movimiento' }}</h3>
+      <form (ngSubmit)="guardarMovimiento()">
+        <div class="campo">
+          <label for="codigo">Código:</label>
+          <input
+            id="codigo"
+            type="text"
+            [(ngModel)]="movimientoActual.codigo"
+            name="codigo"
+            required
+          />
+        </div>
+        <div class="campo">
+          <label for="nombre">Nombre:</label>
+          <input
+            id="nombre"
+            type="text"
+            [(ngModel)]="movimientoActual.nombre"
+            name="nombre"
+            required
+          />
+        </div>
+        <div class="campo">
+          <label for="descripcion">Descripción:</label>
+          <textarea
+            id="descripcion"
+            [(ngModel)]="movimientoActual.descripcion"
+            name="descripcion"
+            required
+          ></textarea>
+        </div>
+
+        <div class="botones">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+<div *ngIf="mensajeExito" class="mensaje-exito">
+      {{ mensajeExito }}
+    </div>
+
+  <!-- Modal de Confirmación -->
+  <div class="modal" *ngIf="mostrarModal">
+    <div class="modal-contenido">
+      <h3>¿Estás seguro de que deseas eliminar este movimiento?</h3>
+      <div class="botones">
+        <button (click)="confirmarEliminacion(true)">Sí</button>
+        <button (click)="confirmarEliminacion(false)">No</button>
+      </div>
+
+    </div>
+
+  </div>

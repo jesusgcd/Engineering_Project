@@ -1,0 +1,170 @@
+<div class="proveedorServiciosOfrecidos-container">
+    <div class="titulo">
+        <h2>Servicios de proveedores</h2>
+        <div>
+            <input type="text" id="buscar" placeholder="Buscar servicio..." [(ngModel)]="filtro" class="input-buscar" />
+            <button class="btn-agregar" (click)="abrirFormulario()">
+                <i class="fa fa-database"></i> Agregar Nuevo
+            </button>
+        </div>
+    </div>
+
+    <table class="tabla-contenedor">
+        <thead>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+            <tr>
+                <th>Proveedor</th> <!-- Nombre del Empresa  -->
+                <th>Servicio</th> <!-- Nombre del servicio  -->
+                <th>Descripción</th>
+                <th>Costo</th>
+                <th>Notas</th>
+
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="proveedorServiciosOfrecidos && proveedorServiciosOfrecidos.length > 0">
+            <tr *ngFor="let p of proveedorServiciosOfrecidos | filter: filtro">
+                <td>{{ p.proveedorEmpresaNombre }}</td>
+                <td>{{ p.nombreServicio }}</td>
+                <td>{{ p.descripcion }}</td>
+                <td>{{ p.costo }}</td>
+                <td>{{ p.notas }}</td>
+                <!-- Se omite notas -->
+                <td>
+                    <button (click)="eliminarServicioOfrecidoProveedor(p.id,p.nombreProveedor)" class="btn-eliminar">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <button (click)="editarServicioOfrecidoProveedor(p)" class="btn-editar">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn-ver" (click)="verDetallesProveedor(p)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <p *ngIf="!proveedorServiciosOfrecidos || proveedorServiciosOfrecidos.length === 0">No hay servicios de proveedores disponibles.</p>
+    </table>
+</div>
+
+<!-- Formulario Emergente -->
+<div class="formulario" *ngIf="mostrarFormulario">
+    <div class="formulario-contenido">
+        <h3>{{ modoEdicion ? 'Actualizar información' : 'Registrar servicio de Proveedor' }}</h3>
+        <form (ngSubmit)="agregarProveedorServicioOfrecido()">
+
+            <div class="campo">
+                <label for="proveedor">Proveedor:</label>
+                <input id="proveedor" type="text" [value]="proveedorServicioOfrecido.proveedorEmpresaNombre"
+                    placeholder="Seleccione un proveedor..." name="proveedor" readonly required />
+                <button type="button" class="btn-modal" (click)="abrirModalProveedores()">
+                    Seleccionar Proveedor
+                </button>
+                <!-- <div *ngIf="!proveedorContacto.proveedorEmpresaNombre && formulario.submitted" class="error">
+                  Debe seleccionar un proveedor.
+                </div> -->
+            </div>
+
+            <div class="campo">
+                <label for="nombreServicio">Nombre del servicio:</label>
+                <input id="nombreServicio" type="text" [(ngModel)]="proveedorServicioOfrecido.nombreServicio"
+                    name="nombreServicio" required />
+            </div>
+
+            <div class="campo">
+                <label for="descripcion">Descripción</label>
+                <input id="descripcion" type="text" [(ngModel)]="proveedorServicioOfrecido.descripcion" name="descripcion" required />
+            </div>
+
+            <div class="campo">
+                <label for="costo">Costo:</label>
+                <input id="costo" type="text" [(ngModel)]="proveedorServicioOfrecido.costo"
+                    name="costo" required />
+            </div>
+
+            <div class="campo">
+                <label for="notas">Notas:</label>
+                <textarea id="notas" [(ngModel)]="proveedorServicioOfrecido.notas" name="notas" required></textarea>
+            </div>
+
+            <div class="botones">
+                <button type="submit">Guardar</button>
+                <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+            </div>
+        </form>
+
+        <p *ngIf="mensajeExito" class="mensaje-exito">Servicio de proveedor agregado con éxito!</p>
+    </div>
+</div>
+
+
+<!-- Mensaje de Éxito -->
+<div *ngIf="mensajeExitoExistencia" class="mensaje-exito">
+    {{ mensajeExitoExistencia }}
+  </div>
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+    <div class="modal-contenido">
+        <h3>¿Estás seguro de que deseas eliminar este servicio?</h3>
+        <p>Esta acción es irreversible</p>
+
+        <div class="botones">
+            <button class="btn-aceptar-eliminacion" (click)="confirmarEliminacion(true)">Sí</button>
+            <button class="btn-rechazar-eliminacion" (click)="confirmarEliminacion(false)">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- PRUEBA DE CHETOS -->
+<div class="modal-personalizado" *ngIf="mostrarModalEmpresaProveedora">
+    <div class="modal-contenido-personalizado">
+        <h3 class="modal-titulo-personalizado">Seleccione un proveedor</h3>
+
+        <!-- Campo de búsqueda -->
+        <input type="text" id="buscar" placeholder="Buscar proveedor..." [(ngModel)]="filtro" class="input-busqueda-personalizada" />
+
+        <!-- Tabla con scroll -->
+        <div class="tabla-scroll-personalizada">
+            <table class="tabla-proveedores-personalizada">
+                <thead>
+                    <tr>
+                        <th>Proveedor</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let proveedorRecorriendo of empresasProveedoras | filter: filtro">
+                        <td>{{ proveedorRecorriendo.nombreProveedor }}</td>
+                        <td>
+                            <button class="boton-seleccionar-personalizado" (click)="seleccionarProveedor(proveedorRecorriendo)">
+                                Seleccionar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="boton-cerrar-personalizado" (click)="cerrarModalProveedores()">Cerrar</button>
+    </div>
+</div>
+
+
+
+<!-- Ventana Modal de Detalles del Proveedor -->
+<div class="modal" *ngIf="verModalVisible">
+    <div class="modal-content">
+        <h3>Detalles del servicio del proveedor:</h3>
+        <div *ngIf="servicioOfrecidoSeleccionado">
+            <p><strong>Proveedor:</strong> {{ servicioOfrecidoSeleccionado.proveedorEmpresaNombre }}</p>
+            <p><strong>Servicio:</strong> {{ servicioOfrecidoSeleccionado.nombreServicio }}</p>
+            <p><strong>Descripción</strong> {{ servicioOfrecidoSeleccionado.descripcion }}</p>
+            <p><strong>Costo:</strong> {{ servicioOfrecidoSeleccionado.costo }}</p>
+            <p><strong>Notas:</strong> {{ servicioOfrecidoSeleccionado.notas }}</p>
+        </div>
+        <div class="modal-actions">
+            <button class="confirm" (click)="cerrarModalVer()">Cerrar</button>
+        </div>
+    </div>
+</div>

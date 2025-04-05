@@ -1,0 +1,395 @@
+/* Estilo para el contenedor del título */
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+.producto-container{
+  margin: 20px;
+}
+
+
+.titulo h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.btn-agregar {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-agregar:hover {
+  background-color: #45a049;
+}
+
+/* Barra de búsqueda */
+.barra-busqueda {
+  
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.barra-busqueda label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.barra-busqueda input {
+  padding: 8px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.input-buscar {
+  margin-right: 20px;
+  padding: 5px;
+  width: 250px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+/* Estilo para el select */
+.campo select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Efecto al pasar el mouse */
+.campo select:hover {
+  border-color: #007bff;
+}
+
+/* Efecto cuando el select está enfocado */
+.campo select:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Estilo para las opciones dentro del select */
+.campo select option {
+  background: #fff;
+  color: #333;
+  padding: 10px;
+}
+
+/* Efecto cuando se selecciona una opción */
+.campo select option:checked {
+  background-color: #007bff;
+  color: #fff;
+}
+/* Estilos generales para la tabla */
+table {
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+  border-collapse: collapse;
+  margin-top: 10px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tabla-contenedor {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
+  }
+
+th {
+  background-color: #f4f4f4;
+  color: rgb(0, 0, 0);
+}
+
+th, td {
+  width: 14%; 
+  padding: 10px;
+  text-align: left; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  border: 1px solid #ddd;
+  white-space: nowrap; 
+}
+
+td {
+  font-size: 14px;
+}
+
+/* Botones dentro de la tabla */
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: #e0e0e0;
+}
+
+  /* Estilo para el icono de basura en la columna de acciones */
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: #f44336; /* Rojo */
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.btn-eliminar:hover {
+  background-color: #f3f3f3;
+}
+
+.btn-eliminar i {
+  font-size: 20px; /* Ajusta el tamaño del ícono */
+}
+
+.btn-editar {
+  background: none;
+  color: #0026ff;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-editar:hover {
+  background-color: #f3f3f3;
+}
+
+.btn-editar i {
+  font-size: 20px; 
+}
+
+/* Mensaje de no productos disponibles */
+p {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+}
+  /* Estilo del fondo oscuro */
+.formulario {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+  /* Contenedor central */
+.formulario-contenido {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-width: 90%;
+  box-sizing: border-box;
+  text-align: center; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+
+}
+
+/* Estilo del título */
+.formulario-contenido h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilo del formulario */
+.formulario-contenido form {
+  width: 100%;
+}
+
+.formulario-contenido input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+  /* Botones */
+    td > button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      padding: 8px 12px;
+      font-size: 14px;
+      margin: 0 5px;
+    }
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.botones button {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.botones button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.botones button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.botones button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.botones button[type="button"]:hover {
+  background-color: #e53935;
+}
+
+.campo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.campo label {
+  width: 150px; /* Ajusta según el espacio deseado */
+  font-weight: bold;
+}
+
+.campo input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+
+.mensaje-exito {
+  position: fixed;
+  top: 100px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50; 
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  z-index: 1000;
+  animation: fadeInOut 2s;
+}
+
+.tituloProducto{
+  margin-left: 10px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-contenido {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px 30px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-contenido .botones {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-contenido .botones button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color:#4CAF50 ;
+  color: #fff;
+}
+
+.modal-contenido .botones button:last-child {
+  background-color: #d9534f;
+}
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+.paginacion button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.paginacion button.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.paginacion button:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+@keyframes fadeInOut {
+  0%, 90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

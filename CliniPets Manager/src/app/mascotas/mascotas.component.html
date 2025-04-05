@@ -1,0 +1,316 @@
+<div class="mascotas-container">
+  <div class="titulo">
+    <h2>Gestión de mascotas</h2>
+
+    <div>
+      <input type="text" id="buscar" placeholder="Buscar mascota..." [(ngModel)]="filtro" class="input-buscar" />
+
+      <button class="btn-agregar" (click)="abrirFormulario()">
+        <i class="fa fa-database"></i> Agregar Nuevo
+      </button>
+    </div>
+  </div>
+
+  <table class="tabla-contenedor">
+    <thead>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+      <tr>
+        <th>Nombre</th>
+        <th>Sexo</th>
+        <th>Raza</th>
+        <th>Especie</th>
+        <th>Dueño</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of mascotasPaginadas | filter: filtro">
+        <td>{{ m.nombreMascota }}</td>
+        <td>{{ m.sexo }}</td>
+        <td>{{ m.raza?.nombre }}</td>
+        <td>{{ m.raza?.especie }}</td>
+        <td>{{ m.nombreDueno }}</td>
+        <td>{{ m.estatusActividad }}</td>
+        <td>
+          <button class="btn-ver" (click)="verDetallesMascota(m)">
+            <i class="bi bi-eye"></i>
+          </button>
+
+
+          <button (click)="editarMascota(m)" class="btn-editar">
+            <i class="bi bi-pencil"></i>
+          </button>
+
+          <button (click)="eliminarMascota(m.documentId, m.nombreMascota)" class="btn-eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+
+        </td>
+      </tr>
+      <tr *ngIf="mascotas.length === 0">
+        <td colspan="7" class="no-data">No hay mascotas disponibles.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Botones de Paginación -->
+  <div class="paginacion">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+    <button *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i + 1)"
+      [class.active]="currentPage === i + 1">
+      {{ i + 1 }}
+    </button>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+  </div>
+</div>
+
+
+<!-- Formulario Emergente -->
+<div class="formulario" *ngIf="mostrarFormulario">
+  <div class="formulario-contenido">
+    <h3>{{ modoEdicion ? 'Actualizar información' : 'Registrar Mascota' }}</h3>
+
+    <!-- Mensaje de advertencia si el formulario no está completo -->
+    <div *ngIf="!mascotaForm.valid && mascotaForm.submitted" class="error">
+      Llene todos los campos.
+    </div>
+
+    <form (ngSubmit)="agregarMascota()" #mascotaForm="ngForm">
+      <div class="campo">
+        <label for="nombre">Nombre de la mascota:</label>
+        <input id="nombre" type="text" [(ngModel)]="mascota.nombreMascota" name="nombre"
+          placeholder="Ingrese el nombre de la mascota..." required #nombre="ngModel" />
+        <div *ngIf="nombre.invalid && nombre.touched" class="error">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="campo">
+        <label for="sexo">Sexo de la mascota:</label>
+        <select id="sexo" [(ngModel)]="mascota.sexo" name="sexo" required #sexo="ngModel">
+          <option [value]="">Seleccionar</option>
+          <option value="Macho">Macho</option>
+          <option value="Hembra">Hembra</option>
+        </select>
+        <div *ngIf="sexo.invalid && sexo.touched" class="error">Seleccione el sexo.</div>
+      </div>
+
+      <div class="campo">
+        <label for="raza">Raza de la mascota:</label>
+        <input id="raza" type="text" [value]="mascota.raza?.nombre" placeholder="Seleccione una raza..." name="raza"
+          readonly required />
+        <button type="button" class="btn-modal" (click)="abrirModalRazas()">
+          Seleccionar Raza
+        </button>
+        <div *ngIf="!mascota.raza?.nombre && mascotaForm.submitted" class="error">
+          Debe seleccionar una raza.
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="especie">Especie de la mascota:</label>
+        <input id="especie" type="text" [value]="mascota.raza?.especie" name="especie" readonly required />
+      </div>
+
+
+      <div class="campo">
+        <label for="tipoSangre">Tipo de sangre:</label>
+        <input id="tipoSangre" type="text" [(ngModel)]="mascota.tipoSangre" name="tipoSangre"
+          placeholder="Colocar ND en caso de no aplica..." required #tipoSangre="ngModel" />
+        <div *ngIf="tipoSangre.invalid && tipoSangre.touched" class="error">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="campo">
+        <label for="fechaNacimiento">Fecha de nacimiento:</label>
+        <input id="fechaNacimiento" type="date" [(ngModel)]="mascota.fechaNacimiento" name="fechaNacimiento" required
+          #fechaNacimiento="ngModel" />
+        <div *ngIf="fechaNacimiento.invalid && fechaNacimiento.touched" class="error">Seleccione la fecha de nacimiento.
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="pesoActual">Peso actual (kg):</label>
+        <input id="pesoActual" type="number" [(ngModel)]="mascota.pesoActual"
+          placeholder="Ingrese el peso actual de la mascota..." name="pesoActual" required #pesoActual="ngModel" />
+        <div *ngIf="pesoActual.invalid && pesoActual.touched" class="error">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="campo">
+        <label for="detallesExtra">Detalles extra:</label>
+        <textarea id="detallesExtra" [(ngModel)]="mascota.detallesExtra" placeholder="Opcional..."
+          name="detallesExtra"></textarea>
+      </div>
+
+      <!-- Estado (solo visible en modo edición) -->
+      <div class="campo" *ngIf="modoEdicion">
+        <label for="estatusActividad">Estatus:</label>
+        <select id="estatusActividad" [(ngModel)]="mascota.estatusActividad" name="estatusActividad" required
+          #estatusActividad="ngModel">
+          <option value="Activa">Activa</option>
+          <option value="Inactiva">Inactiva</option>
+        </select>
+        <div *ngIf="estatusActividad.invalid && estatusActividad.touched" class="error">Este campo es obligatorio.</div>
+      </div>
+
+      <h3>Información del dueño</h3>
+      <div class="campo">
+        <label for="nombreDueno">Nombre del dueño:</label>
+        <input id="nombreDueno" type="text" [(ngModel)]="mascota.nombreDueno" name="nombreDueno"
+          placeholder="Nombre completo del dueño..." required #nombreDueno="ngModel" />
+        <div *ngIf="nombreDueno.invalid && nombreDueno.touched" class="error">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="campo">
+        <label for="cedula">Cédula del dueño:</label>
+        <input id="cedula" type="text" [(ngModel)]="mascota.cedula"
+          placeholder="Ingrese una cédula válida (solo letras y números)..." name="cedula" required #cedula="ngModel"
+          (keypress)="validarCedula($event)" />
+        <div *ngIf="cedula.invalid && cedula.touched" class="error">Este campo es obligatorio.</div>
+      </div>
+
+
+      <div class="campo">
+        <label for="telefono">Teléfono del dueño:</label>
+        <input id="telefono" type="text" [(ngModel)]="mascota.contactoDueno.telefono" name="telefono"
+          placeholder="Número de teléfono del cliente..." required #telefono="ngModel" />
+        <div *ngIf="telefono.invalid && telefono.touched" class="error">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="campo">
+        <label for="correo">Correo del dueño:</label>
+        <input id="correo" type="email" [(ngModel)]="mascota.contactoDueno.correo" name="correo"
+          placeholder="Correo electrónico válido, ej: usuario@gmail.com..." required
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #correo="ngModel" />
+        <!-- Mensaje para campo obligatorio -->
+        <div *ngIf="correo.errors?.['required'] && correo.touched" class="error">
+          Este campo es obligatorio.
+        </div>
+        <!-- Mensaje para formato inválido -->
+        <div *ngIf="correo.errors?.['pattern'] && correo.touched" class="error">
+          Ingrese un correo electrónico válido.
+        </div>
+      </div>
+
+
+
+      <div class="botones">
+        <button class="botonGuardar" type="submit" [disabled]="!mascotaForm.valid || !mascota.raza?.nombre"
+          [ngClass]="{'btn-enabled': mascotaForm.valid && mascota.raza?.nombre, 'btn-disabled': !mascotaForm.valid || !mascota.raza?.nombre}">
+          Guardar
+        </button>
+
+        <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+      </div>
+    </form>
+
+    <p *ngIf="mensajeExito" class="mensaje-exito">Mascota agregada con éxito!</p>
+  </div>
+</div>
+
+<div class="modal" *ngIf="mostrarModalRazas">
+  <div class="modal-contenido">
+    <h3>Seleccione una raza</h3>
+    <!-- Campo de búsqueda -->
+    <input type="text" placeholder="Buscar raza..." [(ngModel)]="filtroRaza" (ngModelChange)="filtrarRazas()"
+      class="input-buscar-raza" />
+
+    <!-- Tabla con scroll -->
+    <div class="tabla-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Especie</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let raza of razasFiltradas">
+            <td>{{ raza.nombre }}</td>
+            <td>{{ raza.especie }}</td>
+            <td>
+              <button class="buttonR" (click)="seleccionarRaza(raza)">
+                Seleccionar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="buttonC" (click)="cerrarModalRazas()">Cerrar</button>
+  </div>
+</div>
+
+
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <h2>Eliminar mascota</h2>
+    <p>{{ modalEliminarMessage }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion" (click)="confirmarEliminacion(true)">Sí</button>
+      <button class="btn-rechazar-eliminacion" (click)="confirmarEliminacion(false)">No</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" *ngIf="verModalVisible">
+  <div class="modal-content">
+    <h3>Detalles de la Mascota:</h3>
+    <div *ngIf="mascotaSeleccionada">
+      <p><strong>Nombre:</strong> {{ mascotaSeleccionada.nombreMascota }}</p>
+      <p><strong>Sexo:</strong> {{ mascotaSeleccionada.sexo }}</p>
+      <p>
+        <strong>Raza:</strong> {{ mascotaSeleccionada.raza?.nombre }}
+        <button class="boton-ver-mas" title="Ver detalles de la raza"
+          (click)="verDetallesRaza(mascotaSeleccionada.raza)">Ver más</button>
+      </p>
+      <p><strong>Especie:</strong> {{ mascotaSeleccionada.raza?.especie }} </p>
+      <p><strong>Tipo de sangre:</strong> {{ mascotaSeleccionada.tipoSangre }}</p>
+      <p><strong>Fecha de nacimiento:</strong> {{ mascotaSeleccionada.fechaNacimiento | date: 'medium' }}</p>
+      <p><strong>Peso actual:</strong> {{ mascotaSeleccionada.pesoActual }} kg</p>
+      <p><strong>Detalles extra:</strong> {{ mascotaSeleccionada.detallesExtra }}</p>
+      <p><strong>Estado:</strong> {{ mascotaSeleccionada.estatusActividad }}</p>
+      <p><strong>Cédula del dueño:</strong> {{ mascotaSeleccionada.cedula }}</p>
+      <p><strong>Nombre del dueño:</strong> {{ mascotaSeleccionada.nombreDueno }}</p>
+      <p><strong>Teléfono del dueño:</strong> {{ mascotaSeleccionada.contactoDueno.telefono }}</p>
+      <p><strong>Correo electrónico del dueño:</strong> {{ mascotaSeleccionada.contactoDueno.correo }}</p>
+      <p><strong>Fecha de registro:</strong> {{ mascotaSeleccionada.fechaRegistro | date: 'medium' }}</p>
+    </div>
+    <div class="modal-actions">
+      <button class="confirm" (click)="cerrarModalVer()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal para Detalles de la Raza -->
+<div class="modal" *ngIf="verModalRazaVisible">
+  <div class="modal-content">
+    <h3>Detalles de la Raza:</h3>
+    <div *ngIf="razaSeleccionada">
+      <p><strong>Nombre:</strong> {{ razaSeleccionada.nombre }}</p>
+      <p><strong>Especie:</strong> {{ razaSeleccionada.especie }}</p>
+      <p><strong>Altura Promedio:</strong> {{ razaSeleccionada.alturaPromedio }}</p>
+      <p><strong>Color Típico:</strong> {{ razaSeleccionada.colorTipico }}</p>
+      <p><strong>Cuidados Especiales:</strong> {{ razaSeleccionada.cuidadosEspeciales }}</p>
+      <p><strong>Esperanza de Vida:</strong> {{ razaSeleccionada.esperanzaVida }}</p>
+      <p><strong>Inteligencia:</strong> {{ razaSeleccionada.inteligencia }}</p>
+      <p><strong>Nivel de Energía:</strong> {{ razaSeleccionada.nivelEnergia }}</p>
+      <p><strong>Peso Promedio:</strong> {{ razaSeleccionada.pesoPromedio }}</p>
+      <p><strong>Popularidad:</strong> {{ razaSeleccionada.popularidad }}</p>
+      <p><strong>Tamaño:</strong> {{ razaSeleccionada.tamano }}</p>
+      <p><strong>Temperamento:</strong> {{ razaSeleccionada.temperamento }}</p>
+      <p><strong>Tipo de Pelaje:</strong> {{ razaSeleccionada.tipoPelaje }}</p>
+      <p><strong>País de Origen:</strong> {{ razaSeleccionada.paisOrigen }}</p>
+    </div>
+    <div class="modal-actions">
+      <button class="confirm" (click)="cerrarModalRaza()">Volver</button>
+    </div>
+  </div>
+</div>
+
+<div class="mensaje-dinamico" *ngIf="mensajeDinamico">
+  {{ mensajeDinamico }}
+</div>

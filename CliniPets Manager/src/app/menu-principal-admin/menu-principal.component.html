@@ -1,0 +1,117 @@
+<div class="menu-principal-container">
+  <div class="navbar-container">
+    <nav class="navbar">
+      <!-- Bootstrap Icons -->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+        rel="stylesheet"
+      />
+      <ul>
+        <!-- Usuario -->
+        <li class="dropdown usuario-info">
+          <a href="#" class="user-icon dropbtn" (click)="toggleDropdown($event, 'usuario')">
+            <i class="bi bi-person-circle"></i>
+            {{ usuario?.nombre || 'Usuario' }}
+          </a>
+          <div class="dropdown-content user-dropdown" *ngIf="activeDropdown === 'usuario'">
+            <p><strong>{{ usuario?.nombre }}</strong></p>
+            <p>{{ usuario?.correo }}</p>
+            <p *ngIf="usuario?.rol"><em>Rol: {{ usuario!.rol }}</em></p>
+            <hr />
+            <button class="btn-salir" (click)="cerrarSesion()">Cerrar Sesión</button>
+          </div>
+        </li>
+
+        <!-- Inicio -->
+        <li>
+          <a [routerLink]="'/MenuInicialTodos'">
+            <i class="bi bi-house-door"></i> Inicio
+          </a>
+        </li>
+
+        <!-- Usuarios -->
+        <li>
+          <a [routerLink]="'/adminUsuario'">
+            <i class="bi bi-shield-lock"></i> Usuarios <!-- Icono de candado o seguridad -->
+          </a>
+        </li>
+
+        <!-- Tareas -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn" (click)="toggleDropdown($event, 'to-do-list')">
+            <i class="bi bi-list-check"></i> Tareas
+          </a>
+          <div class="dropdown-content" *ngIf="activeDropdown === 'to-do-list'">
+            <a [routerLink]="'/to-do-list-pendiente'">Tareas pendientes</a>
+            <a [routerLink]="'/to-do-list-hecho'">Tareas finalizadas</a>
+          </div>
+        </li>
+
+        <!-- Inventario -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn" (click)="toggleDropdown($event, 'inventario')">
+            <i class="bi bi-box-seam"></i> Inventario
+          </a>
+          <div class="dropdown-content" *ngIf="activeDropdown === 'inventario'">
+            <a [routerLink]="'/productos'">Gestión de Productos</a>
+            <a [routerLink]="'/categorias'">Categorías</a>
+            <a [routerLink]="'/movimientos'">Movimientos</a>
+            <a [routerLink]="'/lotes'">Lotes</a>
+            <a [routerLink]="'/agotados'">Productos Agotados</a>
+          </div>
+        </li>
+
+        <!-- Mascotas -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn" (click)="toggleDropdown($event, 'mascotas')">
+            <i class="fas fa-paw"></i> Mascotas
+          </a>
+          <div class="dropdown-content" *ngIf="activeDropdown === 'mascotas'">
+            <a [routerLink]="'/expedientes'">Gestión de expedientes</a>
+            <a [routerLink]="'/mascotas'">Gestión de mascotas</a>
+            <a [routerLink]="'/razas'">Gestión de razas</a>
+          </div>
+        </li>
+
+        <!-- Proveedores -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn" (click)="toggleDropdown($event, 'proveedores')">
+            <i class="bi bi-people-fill"></i> Proveedores
+          </a>
+          <div class="dropdown-content" *ngIf="activeDropdown === 'proveedores'">
+            <a [routerLink]="'/proveedores'">Gestión de proveedores</a>
+            <a [routerLink]="'/proveedores-contactos'">Gestión de contactos de proveedor</a>
+            <a [routerLink]="'/proveedores-productos'">Gestión de productos de proveedor</a>
+            <a [routerLink]="'/proveedores-servicios-ofrecidos'">Gestión de servicios de proveedor</a>
+            <a [routerLink]="'/proveedores-ordenes'">Gestión de órdenes a proveedor</a>
+          </div>
+        </li>
+
+        <!-- Calendario -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn" (click)="toggleDropdown($event, 'calendario')">
+            <i class="bi bi-calendar3"></i> Calendario
+          </a>
+          <div class="dropdown-content" *ngIf="activeDropdown === 'calendario'">
+            <a [routerLink]="'/calendario'">Ver calendario</a>
+          </div>
+        </li>
+
+        <!-- Citas -->
+        <li class="dropdown">
+          <a href="#" class="dropbtn" (click)="toggleDropdown($event, 'citas')">
+            <i class="bi bi-calendar-event"></i> Citas
+          </a>
+          <div class="dropdown-content" *ngIf="activeDropdown === 'citas'">
+            <a [routerLink]="'/citas'">Gestion de citas</a>
+            <a [routerLink]="'/salas'">Gestion de salas</a>
+            <a [routerLink]="'/especialistas'">Gestion de especialistas</a>
+            <a [routerLink]="'/facturas'">Gestion de facturas</a>
+          </div>
+        </li>
+
+
+      </ul>
+    </nav>
+  </div>
+</div>

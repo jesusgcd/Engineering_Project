@@ -1,0 +1,176 @@
+<div class="detalles-expediente">
+    <!-- Información General de la Mascota -->
+    <div class="card mb-5 shadow tarjeta-informacion tabla-contenedor">
+        <div class="card-header bg-primary text-white text-center">
+            <h3><i class="bi bi-info-circle"></i> Información General de la Mascota</h3>
+        </div>
+        <div class="card-body row">
+            <!-- Primera Columna -->
+            <div class="col-md-6 mb-3">
+                <p><strong><i class="bi bi-paw"></i> Nombre:</strong> {{ mascota?.nombreMascota }}</p>
+                <p><strong><i class="bi bi-gender-ambiguous"></i> Sexo:</strong> {{ mascota?.sexo }}</p>
+                <p><strong><i class="bi bi-egg"></i> Especie:</strong> {{ mascota?.especie }}</p>
+                <p><strong><i class="bi bi-calendar-event"></i> Fecha Nacimiento:</strong> {{ mascota?.fechaNacimiento |
+                    date }}
+                </p>
+                <p><strong><i class="bi bi-person"></i> Dueño:</strong> {{ mascota?.nombreDueno }}</p>
+                <p><strong><i class="bi bi-telephone"></i> Teléfono:</strong> {{ mascota?.contactoDueno?.telefono }}</p>
+                <p><strong><i class="bi bi-envelope"></i> Correo:</strong> {{ mascota?.contactoDueno?.correo }}</p>
+            </div>
+        </div>
+        <!-- Botón para Volver Atrás -->
+        <div class="volver-atras">
+            <button class="btn-volver" (click)="volverAtras()">
+                <i class="bi bi-arrow-left"></i> Volver Atrás
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- tabla de la Seguimiento de Vacunas -->
+    <div>
+        <div class="titulo div-agrega">
+            <h1 class="tituloExpediente">Gestión de Seguimiento de Vacunas</h1>
+        </div>
+
+        <div class="barra-busqueda">
+            <label for="buscar">Buscar:</label>
+            <input type="text" id="buscar" placeholder="Buscar Vacuna..." [(ngModel)]="filtro" />
+        </div>
+
+        <div class="titulo div-agrega">
+            <button class="btn-agregar" (click)="abrirFormulario()">
+                <i class="fa"></i> Crear Seguimiento de Vacuna
+            </button>
+        </div>
+
+        <div class="tabla-contenedor">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre de la Vacuna</th>
+                            <th>Fecha Aplicacion</th>
+                            <th>Fecha Proxima Dosis</th>
+                            <th>Observaciones</th>
+                            <th>Estado</th>
+                            <th>Creador del Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="vacunasSeguimiento && vacunasSeguimiento.length > 0">
+                        <tr *ngFor="let vacuna of vacunasSeguimiento | filter: filtro">
+                            <td>{{ vacuna.tipoVacuna }}</td>
+                            <td>{{ vacuna.fechaAplicacion }}</td>
+                            <td>{{ vacuna.fechaProximaDosis }}</td>
+                            <td>{{ vacuna.observaciones }}</td>
+                            <td>{{ vacuna.estado }}</td>
+                            <td>{{ vacuna.usuarioResponsable }}</td>
+                            <td>
+                                <div class="acciones">
+                                    <button class="btn-eliminar" (click)="eliminarVacuna(vacuna.id)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    <button class="btn-editar" (click)="editarVacuna(vacuna.id, vacuna)">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!vacunasSeguimiento || vacunasSeguimiento.length === 0">
+                        <tr>
+                            <td colspan="7">No hay registros de vacunas de {{ mascota?.nombreMascota}}.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Formulario para crear o editar Seguimiento de Vacunas -->
+    <div class="formulario" *ngIf="mostrarFormulario">
+        <div class="formulario-contenido">
+            <h3>{{ modoEdicion ? 'Editar Seguimiento de Vacuna' : 'Crear Nueva Seguimiento de Vacuna' }}</h3>
+
+            <form (ngSubmit)="guardarVacuna()" #vacunaSeguimientoForm="ngForm">
+
+                <div class="campo">
+                    <label for="tipoVacuna">Nombre de la Vacuna:</label>
+                    <input id="tipoVacuna" type="text" [(ngModel)]="vacunaSeguimiento.tipoVacuna" name="tipoVacuna"
+                        required />
+                </div>
+
+                <div class="campo">
+                    <label for="fechaAplicacion">Fecha de Aplicacion:</label>
+                    <input id="fechaAplicacion" type="date" [(ngModel)]="vacunaSeguimiento.fechaAplicacion"
+                        name="fechaAplicacion" required />
+                </div>
+
+                <div class="campo">
+                    <label for="fechaProximaDosis">Fecha de Proxima Dosis?:</label>
+                    <input id="fechaProximaDosis" type="date" [(ngModel)]="vacunaSeguimiento.fechaProximaDosis"
+                        name="fechaProximaDosis" required />
+                </div>
+
+                <div class="campo">
+                    <label for="observaciones">Observaciones Adicionales:</label>
+                    <textarea id="observaciones" [(ngModel)]="vacunaSeguimiento.observaciones"
+                        name="observaciones"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" [(ngModel)]="vacunaSeguimiento.estado" name="estado" required>
+                        <option value="aplicada">Aplicada</option>
+                        <option value="programada">Programada</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="usuarioResponsable">Autor del Registro:</label>
+                    <input id="usuarioResponsable" type="text" [(ngModel)]="vacunaSeguimiento.usuarioResponsable"
+                        name="usuarioResponsable" required />
+                </div>
+
+                <!-- Área para mostrar mensajes -->
+                <div *ngIf="mensaje" class="alerta" [class.error]="esError" [class.exito]="!esError">
+                    {{ mensaje }}
+                </div>
+
+                <div class="botones">
+                    <button type="submit" class="btn-guardar">Guardar</button>
+                    <button type="button" class="btn-cancelar" (click)="cerrarFormulario()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<!-- Ventana emergente de notificación -->
+<div class="formulario-confir" *ngIf="mostrarFormularioNotificacion">
+    <div class="formulario-contenido-confir">
+        <i class="bi bi-check-circle-fill"></i>
+        <h1>{{ mensajeCreacionEdicion}}</h1>
+    </div>
+</div>
+
+
+<!-- Ventana Modal de Confirmación -->
+<div class="formulario" *ngIf="mostrarModal">
+    <div class="formulario-contenido">
+        <h3>¿Estás seguro de que deseas eliminar este registro de Vacuna?</h3>
+        <h3>Esta acción es irreversible</h3>
+        <div class="acciones">
+            <button class="button-confirmar-si" (click)="confirmarEliminacion(true)">Sí</button>
+            <button class="button-confirmar-no" (click)="confirmarEliminacion(false)">No</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="gestion-salas-container">
+  <div class="header">
+    <h1>Gestión de Salas</h1>
+    <button class="btn-add" (click)="abrirFormulario()">
+      <i class="fa fa-plus"></i> Agregar Sala
+    </button>
+  </div>
+
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Ubicación</th>
+        <th>Capacidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sala of salas">
+        <td>{{ sala.nombre }}</td>
+        <td>{{ sala.ubicacion }}</td>
+        <td>{{ sala.capacidad }}</td>
+        <td>
+          <button (click)="editarSala(sala)" class="btn-edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button (click)="eliminarSala(sala.id!)" class="btn-delete">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Formulario Emergente -->
+  <div class="form-container" *ngIf="mostrarFormulario">
+    <div class="form-content">
+      <h3>{{ modoEdicion ? 'Editar Sala' : 'Nueva Sala' }}</h3>
+      <form (ngSubmit)="agregarSala()" #formulario="ngForm" novalidate>
+        <div class="input-group">
+          <label for="nombre">Nombre:</label>
+          <input id="nombre" type="text" [(ngModel)]="sala.nombre" name="nombre" required #nombre="ngModel" />
+          <div *ngIf="nombre.invalid && nombre.touched" class="error-mensaje">
+            <p>El nombre es obligatorio.</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="ubicacion">Ubicación:</label>
+          <input id="ubicacion" type="text" [(ngModel)]="sala.ubicacion" name="ubicacion" required #ubicacion="ngModel" />
+          <div *ngIf="ubicacion.invalid && ubicacion.touched" class="error-mensaje">
+            <p>La ubicación es obligatoria.</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="capacidad">Capacidad:</label>
+          <input id="capacidad" type="number" [(ngModel)]="sala.capacidad" name="capacidad" required #capacidad="ngModel" />
+          <div *ngIf="capacidad.invalid && capacidad.touched" class="error-mensaje">
+            <p>La capacidad es obligatoria.</p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" [disabled]="formulario.invalid">Guardar</button>
+          <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <h2>Eliminar sala</h2>
+    <p>{{ modalEliminarMessage }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion rojo" (click)="confirmarEliminacionCita(true)">Sí</button>
+      <button class="btn-rechazar-eliminacion verde" (click)="confirmarEliminacionCita(false)">No</button>
+    </div>
+  </div>
+</div>

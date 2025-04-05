@@ -1,0 +1,137 @@
+<div class="todo-container">
+  <div class="titulo">
+    <h2>Tareas pendientes</h2>
+    <button class="btn-agregar" (click)="openTaskForm()">
+      <i class="fa fa-plus"></i> Agregar Nueva
+    </button>
+  </div>
+
+    <table class="tabla-contenedor">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of paginatedTasks">
+          <td>{{ task.createdAt | date: 'short' }}</td>
+          <td>{{ task.name }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.status }}</td>
+          <td>
+            <button
+            class="btn-hecho"
+            title="Tarea realizada"
+            (click)="openCompleteModal(task)"
+          >
+            <i class="bi bi-check-circle"></i>
+          </button>
+
+
+            <button class="btn-editar" title="Editar tarea" (click)="editTask(task)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+
+            <button
+            class="btn-eliminar"
+            title="Eliminar tarea"
+            (click)="openDeleteModal(task)"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Mensaje cuando no hay tareas -->
+  <p *ngIf="tasks.length === 0" class="no-tasks-message">No tienes tareas pendientes.</p>
+
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">
+        Anterior
+      </button>
+      <button
+        *ngFor="let page of generatePageNumbers()"
+        [class.active]="currentPage === page"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </button>
+      <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">
+        Siguiente
+      </button>
+    </div>
+
+  </div>
+
+  <div class="mensaje-dinamico" *ngIf="mensajeDinamico">
+    {{ mensajeDinamico }}
+  </div>
+
+
+  <div class="formulario" *ngIf="taskFormVisible">
+    <div class="formulario-contenido">
+      <h3>{{ taskToEdit ? 'Editar Tarea' : 'Nueva Tarea' }}</h3>
+      <form (ngSubmit)="saveTask()">
+        <div class="campo">
+          <label for="name">Nombre:</label>
+          <input id="name" [(ngModel)]="newTask.name" name="name" required />
+        </div>
+        <div class="campo">
+          <label for="description">Descripción:</label>
+          <textarea id="description" [(ngModel)]="newTask.description" name="description"></textarea>
+        </div>
+        <div class="botones">
+          <button class="btnSumit" type="submit" [disabled]="!isFormValid()">Guardar</button>
+          <button type="button" (click)="closeTaskForm()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de confirmación -->
+<div class="modal" *ngIf="modalVisible">
+  <div class="modal-contenido">
+    <h3>Confirmar eliminación</h3>
+    <p>¿Estás seguro de que deseas eliminar la tarea "{{ selectedTask?.name }}"?</p>
+    <div class="botones">
+      <button class="btn-confirmar" (click)="confirmDelete()">Eliminar</button>
+      <button class="btn-cancelar" (click)="cancelDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal de confirmación para completar tarea -->
+<div class="modal" *ngIf="completeModalVisible">
+  <div class="modal-contenido">
+    <h3>Confirmar finalización</h3>
+    <p>
+      ¿Estás seguro de que deseas marcar la tarea <b>"{{ selectedTask?.name }}"</b>
+      como realizada? Esta acción moverá la tarea a la lista de tareas completadas.
+    </p>
+    <div class="botones">
+      <button class="btn-confirmar" (click)="confirmMarkAsDone()">Aceptar</button>
+      <button class="btn-cancelar" (click)="cancelComplete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación para actualizar tarea -->
+<div class="modal" *ngIf="updateModalVisible">
+  <div class="modal-contenido">
+    <h3>Confirmar actualización</h3>
+    <p>¿Estás seguro de que deseas actualizar la tarea <b>"{{ taskToEdit?.name }}"</b>?</p>
+    <div class="botones">
+      <button class="btn-confirmar" (click)="confirmUpdate()">Actualizar</button>
+      <button class="btn-cancelar" (click)="cancelUpdate()">Cancelar</button>
+    </div>
+  </div>
+</div>

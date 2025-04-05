@@ -1,0 +1,320 @@
+<div class="producto-container">
+  <div class="titulo">
+    <h2>Gestión de razas de mascotas</h2>
+  <div>
+    <input
+      type="text"
+      id="buscar"
+      placeholder="Buscar raza..."
+      [(ngModel)]="filtro"
+      class="input-buscar"/>
+    <button class="btn-agregar" (click)="abrirFormulario()">
+      <i class="fa fa-database"></i> Agregar Nuevo
+    </button>
+  </div>
+</div>
+
+  <div class="tabla-contenedor">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Especie</th>
+          <th>Peso promedio (kg)</th>
+          <th>Esperanza de vida (años)</th>
+          <th>Temperamento</th>
+          <th>País de origen</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="razasPaginadas && razasPaginadas.length > 0">
+        <tr *ngFor="let raza of razasPaginadas | filter: filtro">
+          <td>{{ raza.nombre }}</td>
+          <td>{{ raza.especie }}</td>
+          <td>{{ raza.pesoPromedio }}</td>
+          <td>{{ raza.esperanzaVida }}</td>
+          <td>{{ raza.temperamento }}</td>
+          <td>{{ raza.paisOrigen }}</td>
+          <td>
+            <button class="btn-ver" (click)="verDetallesRaza(raza)">
+              <i class="bi bi-eye"></i>
+            </button>
+
+            <button (click)="editarRaza(raza)" class="btn-editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button (click)="eliminarRaza(raza.uid!, raza.nombre)" class="btn-eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <p *ngIf="!razasPaginadas || razasPaginadas.length === 0">No hay razas disponibles.</p>
+    </table>
+
+
+  </div>
+    <!-- Paginación -->
+    <div class="paginacion">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+      <button *ngFor="let page of [].constructor(totalPages); let i = index"
+              (click)="goToPage(i + 1)"
+              [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+  </div>
+
+<div class="formulario" *ngIf="mostrarFormulario">
+  <div class="formulario-contenido">
+    <h3>{{ modoEdicion ? 'Actualizar raza' : 'Registrar nueva raza' }}</h3>
+    <form (ngSubmit)="agregarRaza()" #razaForm="ngForm">
+
+        <!-- Campo obligatorio: Nombre -->
+        <div class="campo">
+          <label for="nombre">Nombre de la raza:</label>
+          <input
+            id="nombre"
+            type="text"
+            [(ngModel)]="raza.nombre"
+            name="nombre"
+            placeholder="Ingrese el nombre de la raza..."
+            required
+            #nombre="ngModel"
+          />
+          <div *ngIf="nombre.invalid && nombre.touched" class="error">Este campo es obligatorio.</div>
+        </div>
+
+        <!-- Campo obligatorio: Especie -->
+        <div class="campo">
+          <label for="especie">Especie:</label>
+          <input
+            id="especie"
+            type="text"
+            [(ngModel)]="raza.especie"
+            name="especie"
+            placeholder="Ingrese el nombre de la especie..."
+            required
+            #especie="ngModel"
+          />
+          <div *ngIf="especie.invalid && especie.touched" class="error">Este campo es obligatorio.</div>
+        </div>
+
+        <!-- Campo opcional: Tamaño -->
+        <div class="campo">
+          <label for="tamano">Tamaño:</label>
+          <select id="tamano" [(ngModel)]="raza.tamano" name="tamano">
+            <option value="">Seleccione el tamaño</option>
+            <option value="Pequeño">Pequeño</option>
+            <option value="Mediano">Mediano</option>
+            <option value="Grande">Grande</option>
+            <option value="No aplica">No aplica</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Peso Promedio -->
+        <div class="campo">
+          <label for="pesoPromedio">Peso Promedio (kg):</label>
+          <select id="pesoPromedio" [(ngModel)]="raza.pesoPromedio" name="pesoPromedio">
+            <option value="">Seleccione un rango</option>
+            <option value="0-5">0-5</option>
+            <option value="5-10">5-10</option>
+            <option value="10-20">10-20</option>
+            <option value="20-30">20-30</option>
+            <option value="30-50">30-50 kg</option>
+            <option value="50 o más">50 o más</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Esperanza de Vida -->
+        <div class="campo">
+          <label for="esperanzaVida">Esperanza de Vida (años):</label>
+          <select id="esperanzaVida" [(ngModel)]="raza.esperanzaVida" name="esperanzaVida">
+            <option value="">Seleccione una opción</option>
+            <option value="0-5">0-5</option>
+            <option value="5-10">5-10</option>
+            <option value="15 o más">15 o más</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Color Típico -->
+        <div class="campo">
+          <label for="colorTipico">Color Típico:</label>
+          <input id="colorTipico" type="text" [(ngModel)]="raza.colorTipico" name="colorTipico" placeholder="Ingrese el color tipico de la raza..."/>
+        </div>
+
+        <!-- Campo opcional: Tipo de Pelaje -->
+        <div class="campo">
+          <label for="tipoPelaje">Tipo de Pelaje:</label>
+          <select id="tipoPelaje" [(ngModel)]="raza.tipoPelaje" name="tipoPelaje">
+            <option value="">Seleccione una opción</option>
+            <option value="Corto">Corto</option>
+            <option value="Mediano">Mediano</option>
+            <option value="Largo">Largo</option>
+            <option value="Rizado">Rizado</option>
+            <option value="Duro">Duro</option>
+            <option value="Sedoso">Sedoso</option>
+            <option value="Sin pelaje">Sin pelaje</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Altura Promedio -->
+        <div class="campo">
+          <label for="alturaPromedio">Altura Promedio (cm):</label>
+          <input id="alturaPromedio" type="text" [(ngModel)]="raza.alturaPromedio" name="alturaPromedio" />
+        </div>
+
+        <!-- Campo opcional: Temperamento -->
+        <div class="campo">
+          <label for="temperamento">Temperamento:</label>
+          <select id="temperamento" [(ngModel)]="raza.temperamento" name="temperamento">
+            <option value="">Seleccione una opción</option>
+            <option value="Amigable">Amigable</option>
+            <option value="Protector">Protector</option>
+            <option value="Juguetón">Juguetón</option>
+            <option value="Tranquilo">Tranquilo</option>
+            <option value="Energético">Energético</option>
+            <option value="Cariñoso">Cariñoso</option>
+            <option value="Obediente">Obediente</option>
+            <option value="Tímido">Tímido</option>
+            <option value="Agresivo">Agresivo</option>
+            <option value="Dominante">Dominante</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Nivel de Energía -->
+        <div class="campo">
+          <label for="nivelEnergia">Nivel de Energía:</label>
+          <select id="nivelEnergia" [(ngModel)]="raza.nivelEnergia" name="nivelEnergia">
+            <option value="">Seleccione una opción</option>
+            <option value="Bajo">Bajo</option>
+            <option value="Moderado">Moderado</option>
+            <option value="Alto">Alto</option>
+            <option value="Muy alto">Muy alto</option>
+            <option value="No aplica">No aplica</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Inteligencia -->
+        <div class="campo">
+          <label for="inteligencia">Inteligencia:</label>
+          <select id="inteligencia" [(ngModel)]="raza.inteligencia" name="inteligencia">
+            <option value="">Seleccione una opción</option>
+            <option value="Muy baja">Muy baja</option>
+            <option value="Baja">Baja</option>
+            <option value="Promedio">Promedio</option>
+            <option value="Alta">Alta</option>
+            <option value="Muy alta">Muy alta</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Cuidados Especiales -->
+        <div class="campo">
+          <label for="cuidadosEspeciales">Cuidados Especiales:</label>
+          <textarea id="cuidadosEspeciales" [(ngModel)]="raza.cuidadosEspeciales" name="cuidadosEspeciales"></textarea>
+        </div>
+
+        <!-- Campo opcional: País de Origen -->
+        <div class="campo">
+          <label for="paisOrigen">País de Origen:</label>
+          <input id="paisOrigen" type="text" [(ngModel)]="raza.paisOrigen" name="paisOrigen" />
+        </div>
+
+        <!-- Campo opcional: Popularidad -->
+        <div class="campo">
+          <label for="popularidad">Popularidad:</label>
+          <select id="popularidad" [(ngModel)]="raza.popularidad" name="popularidad">
+            <option value="">Seleccione una opción</option>
+            <option value="Muy baja">Muy baja</option>
+            <option value="Baja">Baja</option>
+            <option value="Moderada">Moderada</option>
+            <option value="Alta">Alta</option>
+            <option value="Muy alta">Muy alta</option>
+          </select>
+        </div>
+
+        <!-- Campo opcional: Notas Adicionales -->
+        <div class="campo">
+          <label for="notasAdicionales">Notas Adicionales:</label>
+          <textarea id="notasAdicionales" [(ngModel)]="raza.notasAdicionales" name="notasAdicionales"></textarea>
+        </div>
+
+
+      <!-- Botones -->
+      <div class="botones">
+        <button
+          type="submit"
+          [disabled]="!raza.nombre || !raza.especie"
+          [ngClass]="{ 'btn-enabled': raza.nombre && raza.especie, 'btn-disabled': !raza.nombre || !raza.especie }"
+        >
+          Guardar
+        </button>
+        <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" *ngIf="modalVisible">
+  <div class="modal-content">
+    <h2>{{ modalTitle }}</h2>
+    <p>{{ modalMessage }}</p>
+    <div class="modal-actions">
+      <button class="confirm" (click)="confirmModal()">Confirmar</button>
+      <button class="cancel" (click)="cancelModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="finalModalVisible">
+  <div class="modal-content">
+    <h2>Información</h2>
+    <p>{{ finalModalMessage }}</p>
+    <div class="modal-actions">
+      <button class="confirm" (click)="closeFinalModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="modalEliminarVisible">
+  <div class="modal-content">
+    <h2>Eliminar raza</h2>
+    <p>{{ modalEliminarMessage }}</p>
+    <div class="modal-actions">
+      <button class="confirm" (click)="confirmarEliminar()">Confirmar</button>
+      <button class="cancel" (click)="cancelarEliminar()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="verModalVisible">
+  <div class="modal-content">
+    <h3>Detalles de la raza:</h3>
+    <div *ngIf="razaSeleccionada">
+      <p><strong>Nombre:</strong> {{ razaSeleccionada.nombre }}</p>
+      <p><strong>Especie:</strong> {{ razaSeleccionada.especie }}</p>
+      <p><strong>Tamaño:</strong> {{ razaSeleccionada.tamano }}</p>
+      <p><strong>Peso promedio:</strong> {{ razaSeleccionada.pesoPromedio }} kg</p>
+      <p><strong>Esperanza de vida:</strong> {{ razaSeleccionada.esperanzaVida }} años</p>
+      <p><strong>Color típico:</strong> {{ razaSeleccionada.colorTipico }}</p>
+      <p><strong>Tipo de pelaje:</strong> {{ razaSeleccionada.tipoPelaje }}</p>
+      <p><strong>Altura promedio:</strong> {{ razaSeleccionada.alturaPromedio }} cm</p>
+      <p><strong>Temperamento:</strong> {{ razaSeleccionada.temperamento }}</p>
+      <p><strong>Nivel de energía:</strong> {{ razaSeleccionada.nivelEnergia }}</p>
+      <p><strong>Inteligencia:</strong> {{ razaSeleccionada.inteligencia }}</p>
+      <p><strong>Cuidados especiales:</strong> {{ razaSeleccionada.cuidadosEspeciales }}</p>
+      <p><strong>País de origen:</strong> {{ razaSeleccionada.paisOrigen }}</p>
+      <p><strong>Popularidad:</strong> {{ razaSeleccionada.popularidad }}</p>
+      <p><strong>Notas adicionales:</strong> {{ razaSeleccionada.notasAdicionales }}</p>
+    </div>
+    <div class="modal-actions">
+      <button class="confirm" (click)="cerrarModalVer()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="mensaje-dinamico" *ngIf="mensajeDinamico">
+  {{ mensajeDinamico }}
+</div>

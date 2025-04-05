@@ -1,0 +1,117 @@
+/* Variables reemplazadas */
+body {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans', sans-serif;
+    background-color: #fcfaf8;
+    margin: 0;
+    padding: 0;
+  }
+
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .login-box {
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .login-box .login-logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: -10px;
+  }
+
+  .login-box h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1c140d;
+  }
+
+  .login-box .form-group {
+    margin-bottom: 15px;
+  }
+
+  /*Letras de login */
+  .login-box .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #1c140d;
+  }
+
+  .login-box .form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f4ede7;
+    color: #1c140d;
+    font-size: 16px;
+  }
+
+  .login-box .form-group input:focus {
+    outline: none;
+    border-color: #9A3B91;
+  }
+
+  .login-box .form-group input::placeholder {
+    color: #9A3B91;
+  }
+
+  .login-box .alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #ff2b2b;
+  }
+
+  .login-box button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #9A3B91;
+    color: #1c140d;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .login-box button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .login-box .forgot-password {
+    color: #1c140d;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .login-box a {
+    color: #1c140d; /* Color inicial */
+    text-decoration: none; /* Quita el subrayado */
+    transition: color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+  }
+
+  .login-box a:hover {
+    color: #9A3B91; /* Cambia el color al pasar el mouse */
+    text-decoration: underline; /* Agrega subrayado */
+    cursor: pointer; /* Cambia el cursor */
+    transform: scale(1.1); /* Incrementa el tamaño ligeramente */
+  }

@@ -1,0 +1,158 @@
+<div class="facturas-container">
+  <div class="titulo">
+    <h1 class="titulo-facturas">Gestión de Facturas</h1>
+    <button class="btn-agregar" (click)="abrirFormulario()">
+      <i class="fa fa-plus"></i> Agregar Nueva Factura
+    </button>
+  </div>
+
+  <div class="barra-busqueda">
+    <label for="buscar">Buscar:</label>
+    <input
+      type="text"
+      id="buscar"
+      placeholder="Buscar factura..."
+      [(ngModel)]="filtro"
+    />
+  </div>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Factura #</th>
+        <th>Cliente</th>
+        <th>Fecha</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let factura of facturas | filter: filtro">
+        <td>{{ factura.numeroFactura }}</td>
+        <td>{{ factura.cliente }}</td>
+        <td>{{ factura.fecha }}</td>
+        <td>{{ factura.total | currency:'CRC ':'symbol' }}</td>
+        <td>{{ factura.estado }}</td>
+        <td>
+          <button (click)="editarFactura(factura)" class="btn-accion btn-editar">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button (click)="eliminarFactura(factura.id)" class="btn-accion btn-eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="facturas.length === 0">
+      <tr>
+        <td colspan="6" class="sin-datos">No hay facturas disponibles.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Formulario Modal -->
+<div class="modal" *ngIf="mostrarFormulario">
+  <div class="modal-contenido">
+    <h3>{{ modoEdicion ? 'Editar Factura' : 'Nueva Factura' }}</h3>
+    <form #form="ngForm" (ngSubmit)="guardarFactura()" novalidate>
+      <div class="campo">
+        <label for="numero">Código</label>
+        <input id="numero" type="text" [(ngModel)]="factura.numeroFactura" name="numero" required #numero="ngModel" />
+        <div *ngIf="numero.invalid && numero.touched" class="error-mensaje">
+          <p>El código es obligatorio.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="cliente">Cliente</label>
+        <input
+          id="cliente"
+          type="text"
+          [(ngModel)]="factura.cliente"
+          name="cliente"
+          required
+          #cliente="ngModel"
+        />
+        <div *ngIf="cliente.invalid && cliente.touched" class="error-mensaje">
+          <p>El cliente es obligatorio.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="fecha">Fecha</label>
+        <input
+          id="fecha"
+          type="date"
+          [(ngModel)]="factura.fecha"
+          name="fecha"
+          required
+          #fecha="ngModel"
+        />
+        <div *ngIf="fecha.invalid && fecha.touched" class="error-mensaje">
+          <p>La fecha es obligatoria.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="total">Total</label>
+        <input
+          id="total"
+          type="number"
+          [(ngModel)]="factura.total"
+          name="total"
+          required
+          #total="ngModel"
+        />
+        <div *ngIf="total.invalid && total.touched" class="error-mensaje">
+          <p>El total es obligatorio.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="estado">Estado</label>
+        <select
+          id="estado"
+          [(ngModel)]="factura.estado"
+          name="estado"
+          required
+          #estado="ngModel"
+        >
+          <option value="" disabled selected>Seleccione un estado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Pagada">Pagada</option>
+        </select>
+        <div *ngIf="estado.invalid && estado.touched" class="error-mensaje">
+          <p>El estado es obligatorio.</p>
+        </div>
+      </div>
+
+      <!-- Campo de notas -->
+      <div class="campo">
+        <label for="notas">Notas</label>
+        <textarea
+          id="notas"
+          [(ngModel)]="factura.notas"
+          name="notas"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="botones">
+        <button type="submit" class="btn-guardar" [disabled]="form.invalid">
+          Guardar
+        </button>
+        <button type="button" class="btn-cancelar" (click)="cerrarFormulario()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Ventana Modal de Confirmación -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <h2>Eliminar factura</h2>
+    <p>{{ modalEliminarMessage }}</p>
+    <div class="botones">
+      <button class="btn-aceptar-eliminacion rojo" (click)="confirmarEliminacionFactura(true)">Sí</button>
+      <button class="btn-rechazar-eliminacion verde" (click)="confirmarEliminacionFactura(false)">No</button>
+    </div>
+  </div>
+</div>

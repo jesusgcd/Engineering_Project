@@ -1,0 +1,730 @@
+.detalles-expediente {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #7070704d;
+  /* Fondo para esta sección */
+  padding: 20px;
+  /* Opcional, para espacio interno */
+  border-radius: 10px;
+  /* Bordes redondeados para mayor estética */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  /* Sombra ligera */
+}
+
+.btn-volver {
+  background-color: #007bff; /* Color azul */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espaciado entre el ícono y el texto */
+}
+
+.btn-volver:hover {
+  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
+
+.volver-atras {
+  margin-top: 20px; /* Espaciado superior */
+  text-align: left; /* Alineación del botón */
+}
+
+
+.tarjeta-informacion {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  overflow: hidden;
+  /* Quita cualquier posibilidad de scroll */
+}
+
+
+.card-header {
+  border-radius: 10px 10px 0 0;
+}
+
+/* Margen rojo entre las tablas */
+.tabla-contenedor {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+  /* Espacio entre tarjetas */
+  position: relative;
+  /* Necesario para la línea roja */
+}
+
+/* Línea roja entre las tablas */
+.tabla-contenedor::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 4px;
+
+  /* Color rojo para destacar */
+  position: absolute;
+  bottom: -15px;
+  /* Ajustar para separarlo del borde */
+  left: 0;
+  z-index: -1;
+  /* Detrás del contenido */
+}
+
+/* Asegurar que la última tabla no tenga margen innecesario */
+.tabla-contenedor:last-child::after {
+  display: none;
+}
+
+
+.table {
+  margin-bottom: 0;
+  width: 100%;
+  /* Asegura que la tabla ocupe el contenedor */
+  border-collapse: collapse;
+  /* Bordes colapsados */
+  table-layout: fixed;
+  /* Evitar que las celdas sean demasiado grandes */
+  word-wrap: break-word;
+  /* Ajustar contenido largo */
+
+}
+
+.table thead th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.btn-verde {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  font-size: 14px;
+}
+
+.btn-verde:hover {
+  background-color: #45a049;
+}
+
+
+/* Estilo del texto dentro de las columnas */
+.card-body p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.card-body strong {
+  font-size: 18px;
+}
+
+/* Personalización de los encabezados */
+.card-header {
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+}
+
+
+
+/* Estilo del texto dentro de las columnas */
+.card-body p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.card-body strong {
+  font-size: 18px;
+}
+
+/* Personalización de los encabezados */
+.card-header {
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Ajustar el tamaño de la letra en las tablas */
+.table th,
+.table td {
+  font-size: 18px;
+  /* Tamaño uniforme */
+  color: #555;
+  /* Color de texto */
+  text-align: left;
+  /* Alinear texto a la izquierda */
+  vertical-align: middle;
+  /* Centrar verticalmente el texto */
+  border: 2px solid #ddd;
+  /* Bordes más visibles */
+  padding: 12px;
+  /* Espaciado dentro de las celdas */
+  word-wrap: break-word;
+  /* Ajusta palabras largas */
+
+}
+
+/* Encabezados de las tablas */
+.table thead th {
+  background-color: #f4f4f4;
+  /* Fondo claro para encabezados */
+  color: #333;
+  /* Color del texto */
+  font-weight: bold;
+  /* Texto en negrita */
+}
+
+/* Cambiar fondo al pasar el mouse sobre una fila */
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+  /* Fondo gris claro */
+}
+
+/* Contenedor de las tablas */
+.tabla-contenedor {
+  background-color: white;
+  border-radius: 10px;
+  /* Bordes redondeados */
+  padding: 20px;
+  /* Espaciado interno */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  /* Sombra */
+  margin-bottom: 30px;
+  /* Separación entre tablas */
+  overflow-x: auto;
+  /* Scroll horizontal si la tabla es ancha */
+}
+
+/* Sombra al pasar el mouse */
+.tabla-contenedor:hover {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  /* Sombra más intensa */
+}
+
+
+.tituloExpediente {
+  margin-left: 10px;
+  text-align: start;
+  font-size: 30px;
+}
+
+.table-wrapper {
+  max-height: 300px;
+  /* Altura máxima de la tabla visible */
+  overflow-y: auto;
+  /* Habilitar scroll vertical */
+  border: 1px solid #ddd;
+  /* Borde alrededor de la tabla para destacar */
+  border-radius: 10px;
+  /* Bordes redondeados */
+}
+
+
+
+
+/* Estilo del fondo oscuro */
+.formulario {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Permitir desplazamiento en el contenedor principal del formulario */
+.formulario-contenido {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  /* Altura máxima del formulario */
+  overflow-y: auto;
+  /* Activar el scroll vertical */
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Estilo del título */
+.formulario-contenido h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilo del formulario */
+.formulario-contenido form {
+  width: 100%;
+}
+
+.formulario-contenido input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+
+}
+
+
+/* Estilo para el icono de basura en la columna de acciones */
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: #f44336;
+  /* Rojo */
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-eliminar:hover {
+  color: #e53935;
+}
+
+.btn-eliminar i {
+  font-size: 20px;
+  /* Ajusta el tamaño del ícono */
+}
+
+.btn-editar {
+  background-color: #1b96dd;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.btn-editar:hover {
+  background-color: #0d72ad;
+}
+
+.btn-agregar {
+  padding: 10px 20px;
+  /* Verde */
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 19px;
+  display: flex;
+  align-items: end;
+  margin-bottom: 20px;
+  margin-left: auto;
+
+}
+
+
+
+.btn-agregar:hover {
+  background-color: #45a049;
+}
+
+/* Barra de búsqueda */
+.barra-busqueda {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.barra-busqueda label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.barra-busqueda input {
+  padding: 8px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+
+.campo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.campo label {
+  width: 150px;
+  /* Ajusta según el espacio deseado */
+  font-weight: bold;
+}
+
+.campo input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.botones button:first-child {
+  background-color: #4CAF50;
+  /* Verde para 'Sí' */
+  color: white;
+}
+
+.botones button:first-child:hover {
+  background-color: #45a049;
+}
+
+.botones button:last-child {
+  background-color: #f44336;
+  /* Rojo para 'No' */
+  color: white;
+}
+
+.botones button:last-child:hover {
+  background-color: #e53935;
+}
+
+.botones button {
+  padding: 10px 20px;
+  margin: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.botones button {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.botones button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.botones button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.botones button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.botones button[type="button"]:hover {
+  background-color: #e53935;
+}
+
+.btn-guardar {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: 2px solid blue;
+  /* Borde para depuración */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+.btn-guardar:hover {
+  background-color: #007e06;
+  /* Verde más oscuro al pasar el cursor */
+}
+
+.btn-cancelar {
+  padding: 10px 20px;
+  background-color: #f44336;
+  /* Rojo */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-cancelar:hover {
+  background-color: #e53935;
+  /* Rojo más oscuro al pasar el cursor */
+}
+
+
+/* Mensajes de error */
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+/* Resaltar campos con borde rojo si están vacíos */
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+input.ng-valid.ng-touched,
+select.ng-valid.ng-touched {
+  border-color: green;
+}
+
+/* Mensaje "Llene todos los campos" */
+.error {
+  font-size: 14px;
+  color: red;
+  margin-bottom: 10px;
+}
+
+
+
+.alerta {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.alerta.error {
+  color: #a94442;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+}
+
+.alerta.exito {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+}
+
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  /* Altura inicial */
+  max-height: 200px;
+  /* Altura máxima */
+  overflow-y: auto;
+  /* Scroll vertical si el contenido excede */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: none;
+  /* Desactiva el redimensionamiento manual */
+}
+
+/* Ajustar el scroll automático al escribir */
+textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+  /* Color verde al enfocar */
+}
+
+
+/* Estilo del fondo oscuro */
+.formulario-confir {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Fondo oscuro más suave */
+  font: 30px Arial;
+  display: flex;
+  justify-content: center;
+  /* Centrar horizontalmente */
+  align-items: flex-start;
+  /* Asegura que quede en la parte superior */
+  padding-top: 20px;
+  /* Separación desde el borde superior */
+  box-sizing: border-box;
+}
+
+/* Contenedor central */
+.formulario-contenido-confir {
+  background-color: #d4edda;
+  /* Verde claro para fondo */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  /* Sombra más ligera */
+  width: 450px;
+  max-width: 90%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  /* Asegura alineación vertical */
+  align-items: center;
+  /* Asegura que el contenido esté centrado horizontalmente */
+  border: 1px solid #c3e6cb;
+  /* Borde verde claro */
+}
+
+/* Texto */
+h1 {
+  color: #155724;
+  /* Verde oscuro para el texto */
+  margin: 10px 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* Icono */
+.formulario-contenido-confir i {
+  font-size: 40px;
+  color: #155724;
+  /* Verde oscuro para el ícono */
+}
+
+
+.button-confirmar-si {
+  background-color: #ff0202;
+  border-radius: 8px;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+
+
+  font-size: 100%;
+
+
+  padding: 10px 21px;
+
+  transition: color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
+
+}
+
+.button-confirmar-si:active {
+  background-color: #ff020285;
+}
+
+.button-confirmar-si:hover {
+  background-color: #ff020285;
+}
+
+.button-confirmar-no {
+  appearance: button;
+  background-color: #0276FF;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: "RM Neue", sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 21px;
+  text-align: center;
+  text-transform: none;
+  transition: color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-confirmar-no:active {
+  background-color: #0276FF85;
+}
+
+.button-confirmar-no:hover {
+  background-color: #0276FF85;
+}
+
+.table-wrapper {
+  max-height: 400px; /* Altura máxima de la tabla visible */
+  overflow-y: auto; /* Habilitar scroll vertical */
+  overflow-x: hidden; /* Ocultar el scroll horizontal */
+  border: 1px solid #ddd; /* Borde alrededor de la tabla */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Asegura que la tabla ocupe el ancho completo */
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Bordes colapsados */
+  margin: 0;
+}
+
+.table thead th {
+  position: sticky; /* Mantén el encabezado fijo mientras haces scroll */
+  top: 0;
+  z-index: 2; /* Asegúrate de que el encabezado esté sobre el contenido */
+  background-color: #f4f4f4; /* Fondo para los encabezados */
+  color: #333; /* Color del texto */
+}
+
+/* Contenedor de los botones de acciones */
+.acciones {
+  display: flex; /* Alinea los botones en fila */
+  gap: 10px; /* Espaciado entre los botones */
+  justify-content: center; /* Centra los botones horizontalmente */
+  align-items: center; /* Centra los botones verticalmente */
+}
+
+/* Botones dentro de la tabla */
+.acciones button {
+  display: inline-flex; /* Asegura que los íconos se alineen correctamente */
+  align-items: center;
+  justify-content: center;
+  padding: 12px 12px; /* Ajusta el padding para que los botones sean consistentes */
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+}
+
+.btn-eliminar {
+  background: none;
+  color: #f44336; /* Rojo */
+}
+
+.btn-eliminar:hover {
+  color: #e53935; /* Rojo más oscuro */
+}
+
+.btn-editar {
+  background-color: #1b96dd; /* Azul */
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: #0d72ad; /* Azul más oscuro */
+}

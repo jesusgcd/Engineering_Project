@@ -1,0 +1,44 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+
+    <h2 class="calendar-title">Semana Actual</h2>
+
+
+  </div>
+
+  <div class="calendar-table">
+    <div class="calendar-row">
+      <!-- Columna de las horas -->
+      <div class="time-column">
+        <div class="time-cell" *ngFor="let hora of horas">
+          <span [ngClass]="{ 'hidden-hour': hora === '07:00' }">
+            {{ hora !== '07:00' ? hora : '' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Columnas para cada día -->
+      <div
+        class="calendar-column"
+        *ngFor="let dia of diasSemana"
+        [attr.data-day]="dia"
+      >
+        <div class="day-title">{{ dia | titlecase }}</div>
+
+        <!-- Eventos del día -->
+        <div
+          *ngFor="let cita of citasPorDia[dia]"
+          class="event"
+          [style.grid-row]="getGridRow(cita.hora)"
+        >
+          <strong>{{ cita.nombre }}</strong>
+          <p>{{ cita.descripcion }}</p>
+        </div>
+
+
+        
+
+      </div>
+    </div>
+  </div>
+</div>
